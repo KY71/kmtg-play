@@ -50,7 +50,9 @@
   .btn { font-size: 12px; padding: 5px 9px; background: var(--surface3); color: var(--text2);
     border: none; border-radius: 7px; cursor: pointer; line-height: 1.2;
     transition: background .15s, color .15s; }
-  .btn:hover { color: var(--text); background: #3a3a44; }
+  @media (hover: hover) and (pointer: fine) {
+    .btn:hover { color: var(--text); background: #3a3a44; }
+  }
   .btn:active { transform: scale(.95); }
 
   /* 牌堆（牌庫整張卡高；墳場/流放各半高疊在右欄） */
@@ -112,13 +114,17 @@
   /* ══ 卡片 ══ */
   .card { position: relative; width: var(--card-w); height: var(--card-h);
     border-radius: 6px; cursor: grab; flex-shrink: 0;
-    transition: transform .22s cubic-bezier(.2,.8,.25,1), box-shadow .22s; touch-action: none; }
+    transition: transform .22s cubic-bezier(.2,.8,.25,1), box-shadow .22s; touch-action: none;
+    -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
   .card img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px;
     pointer-events: none; display: block; }
-  .card:not(.tapped):hover { transform: translateY(-4px) scale(1.05); z-index: 60;
-    box-shadow: 0 10px 26px rgba(0,0,0,.65); }
   .card.tapped { transform: rotate(90deg); }
-  .card.tapped:hover { transform: rotate(90deg) scale(1.05); z-index: 60; }
+  /* hover 效果只在真的有滑鼠的裝置啟用（觸控裝置的模擬 hover 會黏住不消失） */
+  @media (hover: hover) and (pointer: fine) {
+    .card:not(.tapped):hover { transform: translateY(-4px) scale(1.05); z-index: 60;
+      box-shadow: 0 10px 26px rgba(0,0,0,.65); }
+    .card.tapped:hover { transform: rotate(90deg) scale(1.05); z-index: 60; }
+  }
   .card.on-bf { position: absolute; }
   .card.face-down .front { display: none; }
   .card .back { display: none; width: 100%; height: 100%; border-radius: 6px;
@@ -826,14 +832,39 @@ document.getElementById('p2-life').addEventListener('click', () => setLifeByProm
 /* ───────── 檢查器（hover）───────── */
 const insp = document.getElementById('inspector');
 let hoverTimer = null;
+/* 滑鼠：hover 顯示 */
 document.addEventListener('pointerover', e => {
+  if (e.pointerType !== 'mouse') return;
   const el = e.target.closest('.card');
   if (!el || drag.active) return;
   clearTimeout(hoverTimer);
   hoverTimer = setTimeout(() => showInspector(el, e), 250);
 });
 document.addEventListener('pointerout', e => {
+  if (e.pointerType !== 'mouse') return;
   if (e.target.closest('.card')) { clearTimeout(hoverTimer); hideInspector(); }
+});
+/* 觸控：長按 450ms 顯示、放開消失；一旦開始拖曳（超過門檻）就取消 */
+let pressTimer = null;
+document.addEventListener('pointerdown', e => {
+  if (e.pointerType === 'mouse') return;
+  hideInspector();
+  const el = e.target.closest('.card');
+  if (!el) return;
+  clearTimeout(pressTimer);
+  pressTimer = setTimeout(() => { if (!drag.moved) showInspector(el, e); }, 450);
+});
+document.addEventListener('pointermove', e => {
+  if (e.pointerType === 'mouse') return;
+  if (drag.moved) { clearTimeout(pressTimer); hideInspector(); }
+});
+['pointerup', 'pointercancel'].forEach(ev => document.addEventListener(ev, e => {
+  if (e.pointerType === 'mouse') return;
+  clearTimeout(pressTimer); hideInspector();
+}));
+/* 長按卡片時抑制瀏覽器原生選單 */
+document.addEventListener('contextmenu', e => {
+  if (e.target.closest('.card')) e.preventDefault();
 });
 function showInspector(el, e) {
   const id = el.dataset.id !== undefined ? +el.dataset.id : (el.dataset.vid !== undefined ? +el.dataset.vid : NaN);

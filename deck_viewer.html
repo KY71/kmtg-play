@@ -43,8 +43,11 @@
     object-fit: cover; border: 1px solid rgba(255,255,255,0.15);
     transition: transform .18s ease, box-shadow .18s ease;
     display: block; pointer-events: none; }
-  .cw:hover { z-index: 50; }
-  .cw:hover img { transform: scale(2); transform-origin: center bottom;
+  /* 放大改由 JS 加 .zoom class 控制：
+     滑鼠 = 進出時切換；觸控 = 輕點切換（避免觸控裝置模擬 hover 黏住）。
+     transform-origin 由 JS 依卡片位置計算，靠邊的卡往內側放大，不會超出畫面 */
+  .cw.zoom { z-index: 50; }
+  .cw.zoom img { transform: scale(2);
     box-shadow: 0 12px 48px rgba(0,0,0,.95); }
 
   /* count badge */
@@ -132,12 +135,35 @@ function makeImg(name) {
   return img;
 }
 
+/* 依卡片在視窗中的位置決定放大方向，讓 scale(2) 後仍留在可視範圍內 */
+function zoomOn(wrap) {
+  const img = wrap.querySelector('img');
+  if (!img) return;
+  const r = img.getBoundingClientRect();
+  const ox = r.left < r.width / 2 + 8 ? 'left'
+           : innerWidth - r.right < r.width / 2 + 8 ? 'right' : 'center';
+  const oy = r.top < r.height + 8 ? 'top' : 'bottom';
+  img.style.transformOrigin = `${ox} ${oy}`;
+  wrap.classList.add('zoom');
+}
+function zoomOff(wrap) { wrap.classList.remove('zoom'); }
+function clearZoom() { document.querySelectorAll('.cw.zoom').forEach(zoomOff); }
+/* 觸控：點卡片外的地方收合放大 */
+document.addEventListener('click', e => { if (!e.target.closest('.cw')) clearZoom(); });
+
 function makeCard(name, count) {
   const data = CARDS[name] || {};
   const wrap = document.createElement('div');
   wrap.className = 'cw';
 
   wrap.appendChild(makeImg(name));
+  wrap.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') zoomOn(wrap); });
+  wrap.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') zoomOff(wrap); });
+  wrap.addEventListener('click', e => {
+    if (matchMedia('(hover: hover) and (pointer: fine)').matches) return; // 滑鼠裝置交給 hover
+    if (wrap.classList.contains('zoom')) zoomOff(wrap);
+    else { clearZoom(); zoomOn(wrap); }
+  });
 
   if (count > 1) {
     const badge = document.createElement('div');

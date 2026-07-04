@@ -852,7 +852,7 @@ document.addEventListener('pointerdown', e => {
   const el = e.target.closest('.card');
   if (!el) return;
   clearTimeout(pressTimer);
-  pressTimer = setTimeout(() => { if (!drag.moved) showInspector(el, e); }, 450);
+  pressTimer = setTimeout(() => { if (!drag.moved) showInspector(el, e); }, 250);
 });
 document.addEventListener('pointermove', e => {
   if (e.pointerType === 'mouse') return;

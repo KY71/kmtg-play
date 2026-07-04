@@ -1,0 +1,1577 @@
+{
+  "Dark Ritual": {
+    "cost": "{B}",
+    "type": "Instant",
+    "text": "Add {B}{B}{B}."
+  },
+  "Carnophage": {
+    "cost": "{B}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "text": "Upkeep: pay 1 life or tap."
+  },
+  "Duress": {
+    "cost": "{B}",
+    "type": "Sorcery",
+    "text": "Target opponent reveals hand; you choose a non-creature non-land card, they discard it."
+  },
+  "Unearth": {
+    "cost": "{B}",
+    "type": "Sorcery",
+    "text": "Return target creature card with CMC 3 or less from your graveyard to play. (Original Urza's Saga printing — no exile clause.)"
+  },
+  "Skittering Skirge": {
+    "cost": "{1}{B}",
+    "type": "Creature",
+    "power": 3,
+    "toughness": 2,
+    "abilities": [
+      "flying"
+    ],
+    "text": "When you cast another creature spell, sacrifice Skittering Skirge."
+  },
+  "Ravenous Rats": {
+    "cost": "{1}{B}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "text": "ETB: target opponent discards a card."
+  },
+  "Terror": {
+    "cost": "{1}{B}",
+    "type": "Instant",
+    "text": "Destroy target non-artifact non-black creature."
+  },
+  "Knight of Stromgald": {
+    "cost": "{B}{B}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "abilities": [
+      "protection from white"
+    ],
+    "text": "{B}: gains first strike until EOT."
+  },
+  "Bone Shredder": {
+    "cost": "{2}{B}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "flying"
+    ],
+    "text": "ETB: destroy target non-black non-artifact creature. Echo {2}{B}."
+  },
+  "Engineered Plague": {
+    "cost": "{2}{B}",
+    "type": "Enchantment",
+    "text": "As this enters, choose a creature type. Creatures of that type get -1/-1."
+  },
+  "Phyrexian Negator": {
+    "cost": "{2}{B}",
+    "type": "Creature",
+    "power": 5,
+    "toughness": 5,
+    "abilities": [
+      "trample"
+    ],
+    "text": "Whenever Negator is dealt damage, sacrifice that many permanents."
+  },
+  "Spined Fluke": {
+    "cost": "{2}{B}",
+    "type": "Creature",
+    "power": 5,
+    "toughness": 1,
+    "abilities": [
+      "trample"
+    ],
+    "text": "ETB: sacrifice a creature. {B}: Regenerate Spined Fluke."
+  },
+  "Abyssal Specter": {
+    "cost": "{2}{B}{B}",
+    "type": "Creature — Specter",
+    "power": 2,
+    "toughness": 3,
+    "text": "Flying\nWhenever this creature deals damage to a player, that player discards a card."
+  },
+  "Corrupt": {
+    "cost": "{5}{B}",
+    "type": "Sorcery",
+    "text": "Deals damage equal to number of Swamps you control to target creature or player; you gain that much life."
+  },
+  "Phyrexian Plaguelord": {
+    "cost": "{3}{B}{B}",
+    "type": "Creature",
+    "power": 4,
+    "toughness": 4,
+    "text": "{T}, sacrifice a creature: target creature gets -1/-1 until EOT. Sacrifice a creature: regenerate Plaguelord."
+  },
+  "Spawning Pool": {
+    "cost": "",
+    "type": "Land",
+    "text": "Enters tapped. {T}: add {B}. {1}{B}: becomes a 1/1 Skeleton with regenerate until EOT."
+  },
+  "Swamp": {
+    "cost": "",
+    "type": "Basic Land",
+    "text": "{T}: add {B}."
+  },
+  "Pouncing Jaguar": {
+    "cost": "{G}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "text": "Echo {G}."
+  },
+  "Elvish Lyrist": {
+    "cost": "{G}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "text": "{G},{T}, sacrifice: destroy target enchantment."
+  },
+  "Elvish Herder": {
+    "cost": "{G}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "text": "{G}: target creature gains trample until EOT."
+  },
+  "Hidden Gibbons": {
+    "cost": "{G}",
+    "type": "Enchantment",
+    "text": "When an opponent casts an instant, becomes a 4/4 Ape creature."
+  },
+  "Rancor": {
+    "cost": "{G}",
+    "type": "Enchantment-Aura",
+    "text": "+2/+0, trample. When goes to graveyard from battlefield, return to owner's hand."
+  },
+  "Priest of Titania": {
+    "cost": "{1}{G}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "text": "{T}: add {G} for each Elf on the battlefield."
+  },
+  "Yavimaya Granger": {
+    "cost": "{2}{G}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "text": "Echo {2}{G}. ETB: search for a basic land, put it onto battlefield tapped."
+  },
+  "Might of Oaks": {
+    "cost": "{3}{G}",
+    "type": "Instant",
+    "text": "Target creature gets +7/+7 until EOT."
+  },
+  "Deranged Hermit": {
+    "cost": "{3}{G}{G}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "text": "Echo {3}{G}{G}. ETB: create four 1/1 Squirrel tokens. Squirrels get +1/+1."
+  },
+  "Masticore": {
+    "cost": "{4}",
+    "type": "Artifact Creature",
+    "power": 4,
+    "toughness": 4,
+    "text": "Upkeep: discard a card or sacrifice. {2}: deal 1 to any target. {2}: regenerate."
+  },
+  "Treetop Village": {
+    "cost": "",
+    "type": "Land",
+    "text": "Enters tapped. {T}: add {G}. {1}{G}: becomes 3/3 Ape with trample until EOT."
+  },
+  "Yavimaya Hollow": {
+    "cost": "",
+    "type": "Legendary Land",
+    "text": "{T}: add {C}. {G},{T}: regenerate target creature."
+  },
+  "Forest": {
+    "cost": "",
+    "type": "Basic Land",
+    "text": "{T}: add {G}."
+  },
+  "Goblin Patrol": {
+    "cost": "{R}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 1,
+    "text": "Echo {R}."
+  },
+  "Mogg Fanatic": {
+    "cost": "{R}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "text": "Sacrifice: deal 1 damage to any target."
+  },
+  "Shock": {
+    "cost": "{R}",
+    "type": "Instant",
+    "text": "Deal 2 damage to any target."
+  },
+  "Mogg Flunkies": {
+    "cost": "{1}{R}",
+    "type": "Creature",
+    "power": 3,
+    "toughness": 3,
+    "text": "Can't attack or block alone."
+  },
+  "Incinerate": {
+    "cost": "{1}{R}",
+    "type": "Instant",
+    "text": "Deal 3 damage to any target. Target can't regenerate this turn."
+  },
+  "Ghitu Slinger": {
+    "cost": "{2}{R}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "text": "Echo {2}{R}. ETB: deal 2 damage to any target."
+  },
+  "Wildfire Emissary": {
+    "cost": "{3}{R}",
+    "type": "Creature",
+    "power": 3,
+    "toughness": 4,
+    "abilities": [
+      "protection from white"
+    ],
+    "text": "{R}: +1/+0 until EOT."
+  },
+  "Hammer of Bogardan": {
+    "cost": "{1}{R}{R}",
+    "type": "Sorcery",
+    "text": "Deal 3 damage to any target. {2}{R}{R}{R}: return from graveyard to hand (upkeep only)."
+  },
+  "Fault Line": {
+    "cost": "{X}{R}{R}",
+    "type": "Instant",
+    "text": "Fault Line deals X damage to each creature without flying and each player."
+  },
+  "Mountain": {
+    "cost": "",
+    "type": "Basic Land",
+    "text": "{T}: add {R}."
+  },
+  "Plains": {
+    "cost": "",
+    "type": "Basic Land",
+    "text": "{T}: add {W}."
+  },
+  "Island": {
+    "cost": "",
+    "type": "Basic Land",
+    "text": "{T}: add {U}."
+  },
+  "Rishadan Port": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {C}. {1},{T}: tap target land."
+  },
+  "Coastal Tower": {
+    "cost": "",
+    "type": "Land",
+    "text": "Enters tapped. {T}: add {W} or {U}."
+  },
+  "Shivan Oasis": {
+    "cost": "",
+    "type": "Land",
+    "text": "Enters tapped. {T}: add {R} or {G}."
+  },
+  "Battlefield Forge": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {C}. {T}: add {R} or {W}, pay 1 life."
+  },
+  "Keldon Necropolis": {
+    "cost": "",
+    "type": "Legendary Land",
+    "text": "{T}: add {C}. {1}{B}{R},{T}, sacrifice a creature: deal 2 damage to each player."
+  },
+  "Rith's Grove": {
+    "cost": "",
+    "type": "Land",
+    "text": "Return a basic land to hand. {T}: add {R}, {G}, or {W}."
+  },
+  "Lin Sivvi, Defiant Hero": {
+    "cost": "{2}{W}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 3,
+    "abilities": [
+      "rebel"
+    ],
+    "text": "{X},{T}: search library for white Rebel with CMC≤X, put into play. {3}: put target Rebel from graveyard on bottom of library."
+  },
+  "Ramosian Sergeant": {
+    "cost": "{W}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "rebel"
+    ],
+    "text": "{4},{T}: search library for white Rebel with CMC≤1, put into play."
+  },
+  "Ramosian Lieutenant": {
+    "cost": "{1}{W}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "abilities": [
+      "rebel"
+    ],
+    "text": "{4},{T}: search library for white Rebel with CMC≤2, put into play."
+  },
+  "Ramosian Sky Marshal": {
+    "cost": "{4}{W}",
+    "type": "Creature",
+    "power": 3,
+    "toughness": 3,
+    "abilities": [
+      "flying",
+      "rebel"
+    ],
+    "text": "{4},{T}: search library for white Rebel with CMC≤5, put into play."
+  },
+  "Steadfast Guard": {
+    "cost": "{1}{W}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "abilities": [
+      "first strike",
+      "vigilance",
+      "rebel"
+    ],
+    "text": "First strike, vigilance."
+  },
+  "Voice of Truth": {
+    "cost": "{3}{W}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "abilities": [
+      "flying",
+      "protection from green",
+      "rebel"
+    ],
+    "text": "Flying, protection from green."
+  },
+  "Jhovall Queen": {
+    "cost": "{4}{W}{W}",
+    "type": "Creature",
+    "power": 4,
+    "toughness": 6,
+    "abilities": [
+      "first strike",
+      "vigilance",
+      "rebel"
+    ],
+    "text": "First strike, vigilance."
+  },
+  "Parallax Wave": {
+    "cost": "{2}{W}{W}",
+    "type": "Enchantment",
+    "text": "Fading 5. Remove a counter: exile target creature. When Wave leaves play, return all exiled creatures."
+  },
+  "Reverent Mantra": {
+    "cost": "{3}{W}",
+    "type": "Instant",
+    "text": "Choose a color. Creatures you control gain protection from that color until EOT."
+  },
+  "Story Circle": {
+    "cost": "{1}{W}{W}",
+    "type": "Enchantment",
+    "text": "As this enters, choose a color. {W}: prevent all damage from source of chosen color to you."
+  },
+  "Disenchant": {
+    "cost": "{1}{W}",
+    "type": "Instant",
+    "text": "Destroy target artifact or enchantment."
+  },
+  "Seal of Cleansing": {
+    "cost": "{1}{W}",
+    "type": "Enchantment",
+    "text": "Sacrifice: destroy target artifact or enchantment."
+  },
+  "Thornscape Familiar": {
+    "cost": "{1}{G}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "text": "Red and green spells cost {1} less."
+  },
+  "Blurred Mongoose": {
+    "cost": "{1}{G}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 1,
+    "text": "Can't be the target of spells or abilities opponents control."
+  },
+  "Kavu Titan": {
+    "cost": "{1}{G}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "abilities": [
+      "kicker"
+    ],
+    "text": "Kicker {3}{G}. If kicked, enters as 5/5 with trample."
+  },
+  "Yavimaya Barbarian": {
+    "cost": "{R}{G}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "abilities": [
+      "protection from blue"
+    ],
+    "text": "Protection from blue."
+  },
+  "Raging Kavu": {
+    "cost": "{R}{G}",
+    "type": "Creature",
+    "power": 3,
+    "toughness": 3,
+    "abilities": [
+      "haste"
+    ],
+    "text": "Haste. {R}: gains first strike until EOT."
+  },
+  "Skizzik": {
+    "cost": "{3}{R}",
+    "type": "Creature",
+    "power": 5,
+    "toughness": 3,
+    "abilities": [
+      "trample",
+      "haste"
+    ],
+    "text": "Trample, haste. Kicker {R}. If not kicked, sacrifice at EOT."
+  },
+  "Flametongue Kavu": {
+    "cost": "{3}{R}",
+    "type": "Creature",
+    "power": 4,
+    "toughness": 2,
+    "text": "ETB: deal 4 damage to target creature."
+  },
+  "Thornscape Battlemage": {
+    "cost": "{2}{G}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "text": "Kicker {W} and/or {R}. If white kicked: destroy target artifact. If red kicked: deal 2 damage to target creature or player."
+  },
+  "Urza's Rage": {
+    "cost": "{2}{R}",
+    "type": "Instant",
+    "text": "Can't be countered. Deals 3 damage to any target. Kicker {8}{R}: deals 10 damage instead, can't be prevented."
+  },
+  "Ghitu Fire": {
+    "cost": "{X}{R}",
+    "type": "Sorcery",
+    "text": "Deals X damage to target creature or player. Kicker {1}: deals X damage to second target if you control 5+ land types."
+  },
+  "Crimson Acolyte": {
+    "cost": "{1}{W}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "text": "{W}: target creature gains protection from red until EOT."
+  },
+  "Galina's Knight": {
+    "cost": "{W}{U}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "abilities": [
+      "protection from red",
+      "protection from green"
+    ],
+    "text": "Protection from red and green."
+  },
+  "Meddling Mage": {
+    "cost": "{W}{U}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "text": "As this enters, name a card. That card can't be cast."
+  },
+  "Stormscape Apprentice": {
+    "cost": "{U}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "text": "{W},{T}: tap target creature. {B}{B},{T}: target creature doesn't untap next turn."
+  },
+  "Voice of All": {
+    "cost": "{2}{W}{W}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "abilities": [
+      "flying"
+    ],
+    "text": "Flying. As this enters, choose a color. Gains protection from that color."
+  },
+  "Absorb": {
+    "cost": "{W}{U}{U}",
+    "type": "Instant",
+    "text": "Counter target spell. You gain 3 life."
+  },
+  "Exclude": {
+    "cost": "{2}{U}",
+    "type": "Instant",
+    "text": "Counter target creature spell. Draw a card."
+  },
+  "Fact or Fiction": {
+    "cost": "{3}{U}",
+    "type": "Instant",
+    "text": "Reveal top 5 cards. Opponent divides into 2 piles. You put one pile in hand and the other in graveyard."
+  },
+  "Repulse": {
+    "cost": "{2}{U}",
+    "type": "Instant",
+    "text": "Return target creature to owner's hand. Draw a card."
+  },
+  "Eldrazi Temple": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {C}{C} for Eldrazi spells; {C} for others."
+  },
+  "Eye of Ugin": {
+    "cost": "",
+    "type": "Legendary Land",
+    "text": "Eldrazi spells cost {2} less. {7},{T}: search library for colorless Eldrazi, reveal and add to hand."
+  },
+  "Khalni Garden": {
+    "cost": "",
+    "type": "Land",
+    "text": "Enters tapped. ETB: create 0/1 Plant token. {T}: add {G}."
+  },
+  "Mystifying Maze": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {C}. {4},{T}: exile attacking creature; return it at EOT."
+  },
+  "Tectonic Edge": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {C}. {1},{T},sacrifice: destroy target land if its controller controls 4+ lands."
+  },
+  "Ghost Quarter": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {C}. Sacrifice: destroy target land; its controller may search for basic land."
+  },
+  "Blinkmoth Nexus": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {C}. {1}: becomes 1/1 artifact creature with flying until EOT."
+  },
+  "Mutavault": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {C}. {1}: becomes 2/2 creature of all types until EOT."
+  },
+  "Urborg, Tomb of Yawgmoth": {
+    "cost": "",
+    "type": "Legendary Land",
+    "text": "Each land is a Swamp in addition to its other types."
+  },
+  "Blast Zone": {
+    "cost": "",
+    "type": "Land",
+    "text": "Enters with a charge counter. {T}: add {C}. {X},{T}: add X charge counters. {T},sacrifice: destroy nonland permanents with CMC = counters."
+  },
+  "Cavern of Souls": {
+    "cost": "",
+    "type": "Land",
+    "text": "As enters, choose a creature type. {T}: add {C}. {T}: add one mana of any color; spend only on chosen creature type (uncounterable)."
+  },
+  "Urza's Mine": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {C}. If you control Urza's Power-Plant and Urza's Tower, add {C}{C}{C} instead."
+  },
+  "Urza's Power Plant": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {C}. If you control Urza's Mine and Urza's Tower, add {C}{C}{C} instead."
+  },
+  "Urza's Tower": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {C}. If you control Urza's Mine and Urza's Power-Plant, add {C}{C}{C}{C} instead."
+  },
+  "Salt Marsh": {
+    "cost": "",
+    "type": "Land",
+    "text": "Enters tapped. {T}: add {U} or {B}."
+  },
+  "Shivan Reef": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {C}. {T}: add {U} or {R}, pay 1 life."
+  },
+  "Urborg Volcano": {
+    "cost": "",
+    "type": "Land",
+    "text": "Enters tapped. {T}: add {B} or {R}."
+  },
+  "Sulfurous Springs": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {C}. {T}: add {B} or {R}, pay 1 life."
+  },
+  "Wastes": {
+    "cost": "",
+    "type": "Basic Land",
+    "text": "{T}: add {C}."
+  },
+  "Joraga Treespeaker": {
+    "cost": "{G}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "text": "Level up {G}. Lv 1-4: {T}: add {G}{G}. Lv 5+: Elves you control have '{T}: add {G}{G}'."
+  },
+  "Overgrown Battlement": {
+    "cost": "{1}{G}",
+    "type": "Creature",
+    "power": 0,
+    "toughness": 4,
+    "abilities": [
+      "defender"
+    ],
+    "text": "Defender. {T}: add {G} for each defender you control."
+  },
+  "Primeval Titan": {
+    "cost": "{4}{G}{G}",
+    "type": "Creature",
+    "power": 6,
+    "toughness": 6,
+    "abilities": [
+      "trample"
+    ],
+    "text": "Trample. ETB and whenever attacks: search for 2 lands, put onto battlefield tapped."
+  },
+  "Ulamog, the Infinite Gyre": {
+    "cost": "{11}",
+    "type": "Creature",
+    "power": 10,
+    "toughness": 10,
+    "abilities": [
+      "annihilator 4",
+      "indestructible"
+    ],
+    "text": "Cast: destroy target permanent. Annihilator 4. Indestructible. When put into graveyard from anywhere, shuffle graveyard into library."
+  },
+  "Emrakul, the Aeons Torn": {
+    "cost": "{15}",
+    "type": "Creature",
+    "power": 15,
+    "toughness": 15,
+    "abilities": [
+      "flying",
+      "annihilator 6",
+      "protection from colored spells"
+    ],
+    "text": "Can't be countered. Flying, protection from colored spells, annihilator 6. When put into graveyard, shuffle graveyard into library. Extra turn after this turn."
+  },
+  "Avenger of Zendikar": {
+    "cost": "{5}{G}{G}",
+    "type": "Creature",
+    "power": 5,
+    "toughness": 5,
+    "text": "ETB: create 0/1 Plant tokens equal to lands you control. Landfall: plants get +1/+1 until EOT."
+  },
+  "Terastodon": {
+    "cost": "{6}{G}{G}",
+    "type": "Creature",
+    "power": 9,
+    "toughness": 9,
+    "text": "ETB: destroy up to 3 target noncreature permanents. Each player whose permanent was destroyed creates a 3/3 Elephant token."
+  },
+  "Wurmcoil Engine": {
+    "cost": "{6}",
+    "type": "Artifact Creature",
+    "power": 6,
+    "toughness": 6,
+    "abilities": [
+      "deathtouch",
+      "lifelink"
+    ],
+    "text": "Deathtouch, lifelink. Dies: create a 3/3 artifact creature token with deathtouch and a 3/3 with lifelink."
+  },
+  "Explore": {
+    "cost": "{1}{G}",
+    "type": "Sorcery",
+    "text": "You may play an additional land this turn. Draw a card."
+  },
+  "Growth Spasm": {
+    "cost": "{2}{G}",
+    "type": "Sorcery",
+    "text": "Search library for basic land, put onto battlefield tapped. Create a 0/1 colorless Eldrazi Spawn token with 'Sacrifice: add {C}'."
+  },
+  "Cultivate": {
+    "cost": "{2}{G}",
+    "type": "Sorcery",
+    "text": "Search library for up to 2 basic lands; put one onto battlefield tapped and the other into hand."
+  },
+  "Summoning Trap": {
+    "cost": "{5}{G}{G}",
+    "type": "Instant",
+    "text": "If a creature spell was countered this turn, you may cast this for {0}. Look at top 7 cards; put a creature card from among them onto the battlefield."
+  },
+  "Everflowing Chalice": {
+    "cost": "{0}",
+    "type": "Artifact",
+    "text": "Multikicker {2}. Enters with a charge counter per kicker. {T}: add {C} for each charge counter."
+  },
+  "Eldrazi Mimic": {
+    "cost": "{2}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 1,
+    "text": "Whenever another colorless creature enters, you may have this become that creature's base P/T until EOT."
+  },
+  "Endless One": {
+    "cost": "{X}",
+    "type": "Creature",
+    "power": 0,
+    "toughness": 0,
+    "text": "Enters as an X/X."
+  },
+  "Matter Reshaper": {
+    "cost": "{2}{C}",
+    "type": "Creature",
+    "power": 3,
+    "toughness": 2,
+    "text": "Dies: reveal top card of library; if CMC≤3 put it onto battlefield, otherwise put it into hand."
+  },
+  "Thought-Knot Seer": {
+    "cost": "{3}{C}",
+    "type": "Creature",
+    "power": 4,
+    "toughness": 4,
+    "text": "ETB: target opponent exiles a nonland card from their hand. When this leaves, opponent draws a card."
+  },
+  "Reality Smasher": {
+    "cost": "{4}{C}",
+    "type": "Creature",
+    "power": 5,
+    "toughness": 5,
+    "abilities": [
+      "trample",
+      "haste"
+    ],
+    "text": "Trample, haste. Whenever targeted by opponent's spell/ability, they discard a card."
+  },
+  "Simian Spirit Guide": {
+    "cost": "{2}{R}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "text": "Exile from hand: add {R}."
+  },
+  "Spellskite": {
+    "cost": "{2}",
+    "type": "Artifact Creature",
+    "power": 0,
+    "toughness": 4,
+    "text": "{2} or pay 2 life: change target of target spell or ability to Spellskite."
+  },
+  "Chalice of the Void": {
+    "cost": "{X}{X}",
+    "type": "Artifact",
+    "text": "Enters with X charge counters. Whenever a spell with CMC = charge counters is cast, counter it."
+  },
+  "Ratchet Bomb": {
+    "cost": "{2}",
+    "type": "Artifact",
+    "text": "{T}: add a charge counter. {T}, sacrifice: destroy each nonland permanent with CMC equal to the number of charge counters."
+  },
+  "Dismember": {
+    "cost": "{1}{B/P}{B/P}",
+    "type": "Instant",
+    "text": "Target creature gets -5/-5 until EOT. (Can pay 4 life instead of {B}{B}.)"
+  },
+  "Walking Ballista": {
+    "cost": "{X}{X}",
+    "type": "Artifact Creature",
+    "power": 0,
+    "toughness": 0,
+    "text": "Enters with X +1/+1 counters. {4}: add a +1/+1 counter. Remove a counter: deal 1 damage to any target."
+  },
+  "Endbringer": {
+    "cost": "{5}{C}",
+    "type": "Creature",
+    "power": 5,
+    "toughness": 5,
+    "text": "Untaps during each player's untap step. {T}: deal 1 damage to any target. {C},{T}: target creature can't attack/block. {C}{C},{T}: draw a card."
+  },
+  "Ulamog, the Ceaseless Hunger": {
+    "cost": "{10}",
+    "type": "Creature",
+    "power": 10,
+    "toughness": 10,
+    "abilities": [
+      "indestructible"
+    ],
+    "text": "Cast: exile 2 target permanents. Indestructible. When attacks: defending player exiles top 20 of library."
+  },
+  "Karn, the Great Creator": {
+    "cost": "{4}",
+    "type": "Planeswalker",
+    "text": "+1: noncreature artifacts opponents control lose all abilities until your next turn. -2: you may choose an artifact card you own from outside the game, put it into hand."
+  },
+  "Karn Liberated": {
+    "cost": "{7}",
+    "type": "Planeswalker",
+    "text": "+4: target player exiles a card from hand. -3: exile target permanent. -14: restart game, put exiled cards into hand."
+  },
+  "Expedition Map": {
+    "cost": "{1}",
+    "type": "Artifact",
+    "text": "{2},{T}, sacrifice: search library for any land card, reveal it, put into hand."
+  },
+  "Basilisk Collar": {
+    "cost": "{1}",
+    "type": "Artifact",
+    "text": "Equipped creature has deathtouch and lifelink. Equip {2}."
+  },
+  "Relic of Progenitus": {
+    "cost": "{1}",
+    "type": "Artifact",
+    "text": "{T}: exile target card from a graveyard. {1}, sacrifice: exile all graveyards. Draw a card."
+  },
+  "Warping Wail": {
+    "cost": "{1}{C}",
+    "type": "Instant",
+    "text": "Choose one: counter target sorcery; exile target creature with P≤1; create a 1/1 colorless Eldrazi Scion token."
+  },
+  "All Is Dust": {
+    "cost": "{7}",
+    "type": "Sorcery",
+    "text": "Each player sacrifices all colored permanents."
+  },
+  "Nightscape Familiar": {
+    "cost": "{1}{B}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "text": "Blue and red spells you cast cost {1} less. {2}{B}: regenerate."
+  },
+  "Undermine": {
+    "cost": "{U}{B}{B}",
+    "type": "Instant",
+    "text": "Counter target spell. Target player loses 3 life."
+  },
+  "Disrupt": {
+    "cost": "{U}",
+    "type": "Instant",
+    "text": "Counter target instant or sorcery spell. Draw a card."
+  },
+  "Spite // Malice": {
+    "cost": "{2}{U}{B}",
+    "type": "Instant",
+    "text": "Spite: counter target spell. // Malice: target creature loses all abilities and gets -X/-0 until EOT."
+  },
+  "Fire // Ice": {
+    "cost": "{1}{R}/{1}{U}",
+    "type": "Instant",
+    "text": "Fire: deal 2 damage to any target. // Ice: tap target permanent; draw a card."
+  },
+  "Prophetic Bolt": {
+    "cost": "{3}{U}{R}",
+    "type": "Instant",
+    "text": "Deal 4 damage to target creature or player. Look at top 4 cards, put one into hand and the rest on bottom."
+  },
+  "Void": {
+    "cost": "{3}{B}{R}",
+    "type": "Sorcery",
+    "text": "Choose a number. Destroy all artifacts and creatures with CMC equal to that number. Each opponent discards all cards with that CMC."
+  },
+  "Opt": {
+    "cost": "{U}",
+    "type": "Instant",
+    "text": "Scry 1. Draw a card."
+  },
+  "Yawgmoth's Agenda": {
+    "cost": "{3}{B}{B}",
+    "type": "Enchantment",
+    "text": "Skip your draw step. You may play cards from your graveyard. Cards leave graveyard only if they leave play."
+  },
+  "Plague Spitter": {
+    "cost": "{2}{B}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "text": "At the beginning of each upkeep, this deals 1 damage to each creature and each player. {B}: regenerate."
+  },
+  "Blazing Specter": {
+    "cost": "{2}{B}{R}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "abilities": [
+      "flying",
+      "haste"
+    ],
+    "text": "Flying, haste. When deals combat damage to a player, that player discards a card."
+  },
+  "Phyrexian Scuta": {
+    "cost": "{3}{B}",
+    "type": "Creature",
+    "power": 3,
+    "toughness": 3,
+    "text": "Kicker {2}{B}. If kicked, enters with 2 +1/+1 counters and trample."
+  },
+  "Crypt Angel": {
+    "cost": "{4}{B}",
+    "type": "Creature",
+    "power": 3,
+    "toughness": 3,
+    "abilities": [
+      "flying",
+      "protection from white"
+    ],
+    "text": "Flying, protection from white. ETB: return target blue or red creature card from your graveyard to hand."
+  },
+  "Terminate": {
+    "cost": "{B}{R}",
+    "type": "Instant",
+    "text": "Destroy target creature. It can't be regenerated."
+  },
+  "Vendetta": {
+    "cost": "{B}",
+    "type": "Instant",
+    "text": "Destroy target non-black creature. You lose life equal to that creature's toughness."
+  },
+  "Underground Sea": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {U} or {B}."
+  },
+  "Tundra": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {W} or {U}."
+  },
+  "Scrubland": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {W} or {B}."
+  },
+  "Tropical Island": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {G} or {U}."
+  },
+  "Volcanic Island": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {U} or {R}."
+  },
+  "City of Brass": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add one mana of any color. Deals 1 damage to you."
+  },
+  "Flood Plain": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {C}. {1}, sacrifice: search for Plains or Island, put onto battlefield tapped."
+  },
+  "Gemstone Mine": {
+    "cost": "",
+    "type": "Land",
+    "text": "Enters with 3 mining counters. {T}: remove a counter, add one mana of any color. When no counters, sacrifice."
+  },
+  "Undiscovered Paradise": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add one mana of any color. During your untap step, return to owner's hand."
+  },
+  "Ancient Ziggurat": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add one mana of any color. Spend only to cast creature spells."
+  },
+  "Sliver Hive": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add {C}. {T}: add one mana of any color, spend only on Slivers. {5},{T}: create 1/1 colorless Sliver token."
+  },
+  "Mana Confluence": {
+    "cost": "",
+    "type": "Land",
+    "text": "{T}: add one mana of any color. Pay 1 life."
+  },
+  "Karakas": {
+    "cost": "",
+    "type": "Legendary Land",
+    "text": "{T}: add {W}. {T}: return target legendary creature to its owner's hand."
+  },
+  "Windswept Heath": {
+    "cost": "",
+    "type": "Land",
+    "text": "Sacrifice, pay 1 life: search for a Forest or Plains, put onto battlefield."
+  },
+  "Wooded Foothills": {
+    "cost": "",
+    "type": "Land",
+    "text": "Sacrifice, pay 1 life: search for a Mountain or Forest, put onto battlefield."
+  },
+  "Breeding Pool": {
+    "cost": "",
+    "type": "Land",
+    "text": "As enters, pay 2 life or enters tapped. {T}: add {G} or {U}."
+  },
+  "Blood Crypt": {
+    "cost": "",
+    "type": "Land",
+    "text": "As enters, pay 2 life or enters tapped. {T}: add {B} or {R}."
+  },
+  "Overgrown Tomb": {
+    "cost": "",
+    "type": "Land",
+    "text": "As enters, pay 2 life or enters tapped. {T}: add {B} or {G}."
+  },
+  "Muscle Sliver": {
+    "cost": "{1}{G}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers get +1/+1."
+  },
+  "Winged Sliver": {
+    "cost": "{1}{U}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers have flying."
+  },
+  "Crystalline Sliver": {
+    "cost": "{W}{U}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers have shroud."
+  },
+  "Hibernation Sliver": {
+    "cost": "{1}{U}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers have '{U}: return this Sliver to its owner's hand.'"
+  },
+  "Acidic Sliver": {
+    "cost": "{R}{R}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers have '{2}, sacrifice: deal 2 damage to any target.'"
+  },
+  "Counterspell": {
+    "cost": "{U}{U}",
+    "type": "Instant",
+    "text": "Counter target spell."
+  },
+  "Force of Will": {
+    "cost": "{3}{U}{U}",
+    "type": "Instant",
+    "text": "Alternative cost: exile a blue card from hand, pay 1 life. Counter target spell."
+  },
+  "Misdirection": {
+    "cost": "{3}{U}",
+    "type": "Instant",
+    "text": "Alternative cost: exile a blue card from hand. Change the target of target spell targeting you."
+  },
+  "Swords to Plowshares": {
+    "cost": "{W}",
+    "type": "Instant",
+    "text": "Exile target creature. Its controller gains life equal to its power."
+  },
+  "Perish": {
+    "cost": "{2}{B}",
+    "type": "Sorcery",
+    "text": "Destroy all green creatures."
+  },
+  "Galerider Sliver": {
+    "cost": "{U}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers have flying."
+  },
+  "Sinew Sliver": {
+    "cost": "{1}{W}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers get +1/+1."
+  },
+  "Predatory Sliver": {
+    "cost": "{1}{G}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "Each Sliver you control gets +1/+1."
+  },
+  "Striking Sliver": {
+    "cost": "{R}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers have first strike."
+  },
+  "Hunter Sliver": {
+    "cost": "{1}{R}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers have provoke."
+  },
+  "Syphon Sliver": {
+    "cost": "{3}{B}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers have lifelink."
+  },
+  "Venom Sliver": {
+    "cost": "{2}{G}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers have deathtouch."
+  },
+  "Aether Vial": {
+    "cost": "{1}",
+    "type": "Artifact",
+    "text": "Upkeep: add a charge counter. {T}: put a creature with CMC equal to charge counters from hand onto battlefield."
+  },
+  "Manaweft Sliver": {
+    "cost": "{1}{G}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers have '{T}: add one mana of any color.'"
+  },
+  "Diffusion Sliver": {
+    "cost": "{1}{U}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers make spells targeting them cost {2} more."
+  },
+  "Sedge Sliver": {
+    "cost": "{2}{R}",
+    "type": "Creature",
+    "power": 2,
+    "toughness": 2,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers have '{B}: regenerate.'"
+  },
+  "Blur Sliver": {
+    "cost": "{4}{R}",
+    "type": "Creature",
+    "power": 3,
+    "toughness": 3,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers have haste."
+  },
+  "Necrotic Sliver": {
+    "cost": "{1}{B}{B}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers have '{3}, sacrifice: destroy target permanent.'"
+  },
+  "Sentinel Sliver": {
+    "cost": "{1}{W}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers have vigilance."
+  },
+  "Darkheart Sliver": {
+    "cost": "{B}{G}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers have '{3}, sacrifice: gain 3 life.'"
+  },
+  "Collected Company": {
+    "cost": "{3}{G}",
+    "type": "Instant",
+    "text": "Look at top 6 cards. Put up to two creature cards with CMC≤3 from among them onto the battlefield."
+  },
+  "Abrupt Decay": {
+    "cost": "{B}{G}",
+    "type": "Instant",
+    "text": "Can't be countered. Destroy target nonland permanent with CMC 3 or less."
+  },
+  "Sliver Hivelord": {
+    "cost": "{W}{U}{B}{R}{G}",
+    "type": "Creature",
+    "power": 5,
+    "toughness": 5,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers have indestructible."
+  },
+  "Sliver Legion": {
+    "cost": "{W}{U}{B}{R}{G}",
+    "type": "Creature",
+    "power": 7,
+    "toughness": 7,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers get +1/+1 for each other Sliver you control."
+  },
+  "Harmonic Sliver": {
+    "cost": "{1}{G}{W}",
+    "type": "Creature",
+    "power": 1,
+    "toughness": 1,
+    "abilities": [
+      "sliver"
+    ],
+    "text": "All Slivers have 'ETB: destroy target artifact or enchantment.'"
+  },
+  "Viashino Sandstalker": {
+    "cost": "{1}{R}{R}",
+    "type": "Creature",
+    "power": 4,
+    "toughness": 2,
+    "abilities": [
+      "haste"
+    ],
+    "text": "At end of turn, return Viashino Sandstalker to its owner hand."
+  },
+  "Shivan Dragon": {
+    "cost": "{4}{R}{R}",
+    "type": "Creature — Dragon",
+    "power": 5,
+    "toughness": 5,
+    "text": "Flying\n{R}: This creature gets +1/+0 until end of turn."
+  },
+  "Act of Treason": {
+    "cost": "{2}{R}",
+    "type": "Sorcery",
+    "text": "Gain control of target creature until end of turn. Untap that creature. It gains haste until end of turn. (It can attack and {T} this turn.)"
+  },
+  "Cancel": {
+    "cost": "{1}{U}{U}",
+    "type": "Instant",
+    "text": "Counter target spell."
+  },
+  "Cloudkin Seer": {
+    "cost": "{2}{U}",
+    "type": "Creature — Elemental Wizard",
+    "power": 2,
+    "toughness": 1,
+    "text": "Flying\nWhen this creature enters, draw a card."
+  },
+  "Colossal Dreadmaw": {
+    "cost": "{4}{G}{G}",
+    "type": "Creature — Dinosaur",
+    "power": 6,
+    "toughness": 6,
+    "text": "Trample (This creature can deal excess combat damage to the player or planeswalker it's attacking.)"
+  },
+  "Cursed Minotaur": {
+    "cost": "{2}{B}",
+    "type": "Creature — Zombie Minotaur",
+    "power": 3,
+    "toughness": 2,
+    "text": "Menace (This creature can't be blocked except by two or more creatures.)"
+  },
+  "Divination": {
+    "cost": "{2}{U}",
+    "type": "Sorcery",
+    "text": "Draw two cards."
+  },
+  "Dragon Egg": {
+    "cost": "{2}{R}",
+    "type": "Creature — Dragon Egg",
+    "power": 0,
+    "toughness": 2,
+    "text": "Defender\nWhen this creature dies, create a 2/2 red Dragon creature token with flying and \"{R}: This token gets +1/+0 until end of turn.\""
+  },
+  "Elite Vanguard": {
+    "cost": "{W}",
+    "type": "Creature — Human Soldier",
+    "power": 2,
+    "toughness": 1,
+    "text": ""
+  },
+  "Giant Growth": {
+    "cost": "{G}",
+    "type": "Instant",
+    "text": "Target creature gets +3/+3 until end of turn."
+  },
+  "Giant Spider": {
+    "cost": "{3}{G}",
+    "type": "Creature — Spider",
+    "power": 2,
+    "toughness": 4,
+    "text": "Reach (This creature can block creatures with flying.)"
+  },
+  "Gigantosaurus": {
+    "cost": "{G}{G}{G}{G}{G}",
+    "type": "Creature — Dinosaur",
+    "power": 10,
+    "toughness": 10,
+    "text": ""
+  },
+  "Goblin Arsonist": {
+    "cost": "{R}",
+    "type": "Creature — Goblin Shaman",
+    "power": 1,
+    "toughness": 1,
+    "text": "When this creature dies, you may have it deal 1 damage to any target."
+  },
+  "Gravewaker": {
+    "cost": "{4}{B}{B}",
+    "type": "Creature — Bird Spirit",
+    "power": 5,
+    "toughness": 5,
+    "text": "Flying (This creature can't be blocked except by creatures with flying or reach.)\n{5}{B}{B}: Return target creature card from your graveyard to the battlefield tapped."
+  },
+  "Inspiring Captain": {
+    "cost": "{3}{W}",
+    "type": "Creature — Human Knight",
+    "power": 3,
+    "toughness": 3,
+    "text": "When this creature enters, creatures you control get +1/+1 until end of turn."
+  },
+  "Kalonian Tusker": {
+    "cost": "{G}{G}",
+    "type": "Creature — Beast",
+    "power": 3,
+    "toughness": 3,
+    "text": ""
+  },
+  "Leatherback Baloth": {
+    "cost": "{G}{G}{G}",
+    "type": "Creature — Beast",
+    "power": 4,
+    "toughness": 5,
+    "text": ""
+  },
+  "Lightning Bolt": {
+    "cost": "{R}",
+    "type": "Instant",
+    "text": "Lightning Bolt deals 3 damage to any target."
+  },
+  "Llanowar Elves": {
+    "cost": "{G}",
+    "type": "Creature — Elf Druid",
+    "power": 1,
+    "toughness": 1,
+    "text": "{T}: Add {G}."
+  },
+  "Lyra Dawnbringer": {
+    "cost": "{3}{W}{W}",
+    "type": "Legendary Creature — Angel",
+    "power": 5,
+    "toughness": 5,
+    "text": "Flying\nFirst strike (This creature deals combat damage before creatures without first strike.)\nLifelink (Damage dealt by this creature also causes you to gain that much life.)\nOther Angels you control get +1/+1 and have lifelink."
+  },
+  "Mahamoti Djinn": {
+    "cost": "{4}{U}{U}",
+    "type": "Creature — Djinn",
+    "power": 5,
+    "toughness": 6,
+    "text": "Flying (This creature can't be blocked except by creatures with flying or reach.)"
+  },
+  "Mind Rot": {
+    "cost": "{2}{B}",
+    "type": "Sorcery",
+    "text": "Target player discards two cards."
+  },
+  "Murder": {
+    "cost": "{1}{B}{B}",
+    "type": "Instant",
+    "text": "Destroy target creature."
+  },
+  "Nightmare": {
+    "cost": "{5}{B}",
+    "type": "Creature — Nightmare Horse",
+    "power": "*",
+    "toughness": "*",
+    "text": "Flying (This creature can't be blocked except by creatures with flying or reach.)\nNightmare's power and toughness are each equal to the number of Swamps you control."
+  },
+  "Pacifism": {
+    "cost": "{1}{W}",
+    "type": "Enchantment — Aura",
+    "text": "Enchant creature\nEnchanted creature can't attack or block."
+  },
+  "Pegasus Courser": {
+    "cost": "{2}{W}",
+    "type": "Creature — Pegasus",
+    "power": 1,
+    "toughness": 3,
+    "text": "Flying\nWhenever this creature attacks, another target attacking creature gains flying until end of turn."
+  },
+  "Plummet": {
+    "cost": "{1}{G}",
+    "type": "Instant",
+    "text": "Destroy target creature with flying."
+  },
+  "Rabid Bite": {
+    "cost": "{1}{G}",
+    "type": "Sorcery",
+    "text": "Target creature you control deals damage equal to its power to target creature you don't control."
+  },
+  "Raging Goblin": {
+    "cost": "{R}",
+    "type": "Creature — Goblin Berserker",
+    "power": 1,
+    "toughness": 1,
+    "text": "Haste (This creature can attack and {T} as soon as it comes under your control.)"
+  },
+  "Raise the Alarm": {
+    "cost": "{1}{W}",
+    "type": "Instant",
+    "text": "Create two 1/1 white Soldier creature tokens."
+  },
+  "Riddlemaster Sphinx": {
+    "cost": "{4}{U}{U}",
+    "type": "Creature — Sphinx",
+    "power": 5,
+    "toughness": 5,
+    "text": "Flying (This creature can't be blocked except by creatures with flying or reach.)\nWhen this creature enters, you may return target creature an opponent controls to its owner's hand."
+  },
+  "Searing Spear": {
+    "cost": "{1}{R}",
+    "type": "Instant",
+    "text": "Searing Spear deals 3 damage to any target."
+  },
+  "Serra Angel": {
+    "cost": "{3}{W}{W}",
+    "type": "Creature — Angel",
+    "power": 4,
+    "toughness": 4,
+    "text": "Flying\nVigilance (Attacking doesn't cause this creature to tap.)"
+  },
+  "Sign in Blood": {
+    "cost": "{B}{B}",
+    "type": "Sorcery",
+    "text": "Target player draws two cards and loses 2 life."
+  },
+  "Storm Crow": {
+    "cost": "{1}{U}",
+    "type": "Creature — Bird",
+    "power": 1,
+    "toughness": 2,
+    "text": "Flying (This creature can't be blocked except by creatures with flying or reach.)"
+  },
+  "Titanic Growth": {
+    "cost": "{1}{G}",
+    "type": "Instant",
+    "text": "Target creature gets +4/+4 until end of turn."
+  },
+  "Unsummon": {
+    "cost": "{U}",
+    "type": "Instant",
+    "text": "Return target creature to its owner's hand."
+  },
+  "Valley Dasher": {
+    "cost": "{1}{R}",
+    "type": "Creature — Human Berserker",
+    "power": 2,
+    "toughness": 2,
+    "text": "Haste\nThis creature attacks each combat if able."
+  },
+  "Vampire Nighthawk": {
+    "cost": "{1}{B}{B}",
+    "type": "Creature — Vampire Shaman",
+    "power": 2,
+    "toughness": 3,
+    "text": "Flying\nDeathtouch (Any amount of damage this deals to a creature is enough to destroy it.)\nLifelink (Damage dealt by this creature also causes you to gain that much life.)"
+  },
+  "Warden of Evos Isle": {
+    "cost": "{2}{U}",
+    "type": "Creature — Bird Wizard",
+    "power": 2,
+    "toughness": 2,
+    "text": "Flying\nCreature spells with flying you cast cost {1} less to cast."
+  },
+  "Welkin Tern": {
+    "cost": "{1}{U}",
+    "type": "Creature — Bird",
+    "power": 2,
+    "toughness": 1,
+    "text": "Flying (This creature can't be blocked except by creatures with flying or reach.)\nThis creature can block only creatures with flying."
+  }
+}

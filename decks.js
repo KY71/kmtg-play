@@ -1,0 +1,1275 @@
+window.DECKS_DATA = {
+ "black": {
+  "name": "克薩黑控快攻 v1.1",
+  "era": "克薩時代",
+  "size": 60,
+  "cards": [
+   [
+    "Dark Ritual",
+    4
+   ],
+   [
+    "Carnophage",
+    3
+   ],
+   [
+    "Duress",
+    4
+   ],
+   [
+    "Ravenous Rats",
+    4
+   ],
+   [
+    "Terror",
+    3
+   ],
+   [
+    "Bone Shredder",
+    3
+   ],
+   [
+    "Engineered Plague",
+    3
+   ],
+   [
+    "Knight of Stromgald",
+    2
+   ],
+   [
+    "Unearth",
+    3
+   ],
+   [
+    "Skittering Skirge",
+    4
+   ],
+   [
+    "Corrupt",
+    2
+   ],
+   [
+    "Spined Fluke",
+    2
+   ],
+   [
+    "Abyssal Specter",
+    3
+   ],
+   [
+    "Spawning Pool",
+    3
+   ],
+   [
+    "Swamp",
+    17
+   ]
+  ]
+ },
+ "green": {
+  "name": "克薩綠色 Stompy",
+  "era": "克薩時代",
+  "size": 60,
+  "cards": [
+   [
+    "Pouncing Jaguar",
+    4
+   ],
+   [
+    "Elvish Lyrist",
+    4
+   ],
+   [
+    "Hidden Gibbons",
+    4
+   ],
+   [
+    "Rancor",
+    4
+   ],
+   [
+    "Priest of Titania",
+    4
+   ],
+   [
+    "Yavimaya Granger",
+    3
+   ],
+   [
+    "Might of Oaks",
+    4
+   ],
+   [
+    "Deranged Hermit",
+    3
+   ],
+   [
+    "Masticore",
+    2
+   ],
+   [
+    "Elvish Herder",
+    2
+   ],
+   [
+    "Yavimaya Hollow",
+    1
+   ],
+   [
+    "Treetop Village",
+    4
+   ],
+   [
+    "Forest",
+    21
+   ]
+  ]
+ },
+ "red": {
+  "name": "克薩紅色 Sligh",
+  "era": "克薩時代",
+  "size": 60,
+  "cards": [
+   [
+    "Mogg Fanatic",
+    4
+   ],
+   [
+    "Goblin Patrol",
+    4
+   ],
+   [
+    "Shock",
+    4
+   ],
+   [
+    "Mogg Flunkies",
+    4
+   ],
+   [
+    "Incinerate",
+    4
+   ],
+   [
+    "Viashino Sandstalker",
+    4
+   ],
+   [
+    "Ghitu Slinger",
+    3
+   ],
+   [
+    "Hammer of Bogardan",
+    3
+   ],
+   [
+    "Wildfire Emissary",
+    3
+   ],
+   [
+    "Fault Line",
+    2
+   ],
+   [
+    "Shivan Dragon",
+    1
+   ],
+   [
+    "Mountain",
+    24
+   ]
+  ]
+ },
+ "grixis": {
+  "name": "大戰役 Grixis 控制",
+  "era": "大戰役",
+  "size": 60,
+  "cards": [
+   [
+    "Nightscape Familiar",
+    4
+   ],
+   [
+    "Undermine",
+    4
+   ],
+   [
+    "Exclude",
+    3
+   ],
+   [
+    "Disrupt",
+    2
+   ],
+   [
+    "Repulse",
+    4
+   ],
+   [
+    "Opt",
+    4
+   ],
+   [
+    "Fact or Fiction",
+    2
+   ],
+   [
+    "Spite // Malice",
+    2
+   ],
+   [
+    "Fire // Ice",
+    2
+   ],
+   [
+    "Prophetic Bolt",
+    2
+   ],
+   [
+    "Urza's Rage",
+    3
+   ],
+   [
+    "Void",
+    3
+   ],
+   [
+    "Yawgmoth's Agenda",
+    1
+   ],
+   [
+    "Island",
+    7
+   ],
+   [
+    "Swamp",
+    4
+   ],
+   [
+    "Mountain",
+    1
+   ],
+   [
+    "Salt Marsh",
+    4
+   ],
+   [
+    "Shivan Reef",
+    4
+   ],
+   [
+    "Urborg Volcano",
+    4
+   ]
+  ]
+ },
+ "machine": {
+  "name": "大戰役 Machine Head 黑紅",
+  "era": "大戰役",
+  "size": 60,
+  "cards": [
+   [
+    "Dark Ritual",
+    4
+   ],
+   [
+    "Duress",
+    4
+   ],
+   [
+    "Plague Spitter",
+    4
+   ],
+   [
+    "Terminate",
+    4
+   ],
+   [
+    "Vendetta",
+    3
+   ],
+   [
+    "Blazing Specter",
+    4
+   ],
+   [
+    "Phyrexian Scuta",
+    3
+   ],
+   [
+    "Skizzik",
+    3
+   ],
+   [
+    "Flametongue Kavu",
+    2
+   ],
+   [
+    "Crypt Angel",
+    2
+   ],
+   [
+    "Urza's Rage",
+    3
+   ],
+   [
+    "Swamp",
+    6
+   ],
+   [
+    "Mountain",
+    6
+   ],
+   [
+    "Sulfurous Springs",
+    4
+   ],
+   [
+    "Urborg Volcano",
+    4
+   ],
+   [
+    "Rishadan Port",
+    4
+   ]
+  ]
+ },
+ "wu": {
+  "name": "大戰役白藍解決方案",
+  "era": "大戰役",
+  "size": 60,
+  "cards": [
+   [
+    "Stormscape Apprentice",
+    4
+   ],
+   [
+    "Crimson Acolyte",
+    4
+   ],
+   [
+    "Galina's Knight",
+    4
+   ],
+   [
+    "Meddling Mage",
+    4
+   ],
+   [
+    "Voice of All",
+    4
+   ],
+   [
+    "Absorb",
+    4
+   ],
+   [
+    "Exclude",
+    4
+   ],
+   [
+    "Fact or Fiction",
+    4
+   ],
+   [
+    "Repulse",
+    4
+   ],
+   [
+    "Coastal Tower",
+    4
+   ],
+   [
+    "Island",
+    10
+   ],
+   [
+    "Plains",
+    10
+   ]
+  ]
+ },
+ "rg-kavu": {
+  "name": "大戰役紅綠卡烏快攻",
+  "era": "大戰役",
+  "size": 60,
+  "cards": [
+   [
+    "Thornscape Familiar",
+    4
+   ],
+   [
+    "Blurred Mongoose",
+    4
+   ],
+   [
+    "Kavu Titan",
+    4
+   ],
+   [
+    "Raging Kavu",
+    4
+   ],
+   [
+    "Skizzik",
+    4
+   ],
+   [
+    "Thornscape Battlemage",
+    4
+   ],
+   [
+    "Flametongue Kavu",
+    4
+   ],
+   [
+    "Urza's Rage",
+    4
+   ],
+   [
+    "Ghitu Fire",
+    4
+   ],
+   [
+    "Forest",
+    9
+   ],
+   [
+    "Mountain",
+    6
+   ],
+   [
+    "Battlefield Forge",
+    3
+   ],
+   [
+    "Shivan Oasis",
+    4
+   ],
+   [
+    "Keldon Necropolis",
+    1
+   ],
+   [
+    "Rith's Grove",
+    1
+   ]
+  ]
+ },
+ "slivers": {
+  "name": "反制裂片妖",
+  "era": "Extended 1999",
+  "size": 60,
+  "cards": [
+   [
+    "Crystalline Sliver",
+    4
+   ],
+   [
+    "Muscle Sliver",
+    4
+   ],
+   [
+    "Winged Sliver",
+    4
+   ],
+   [
+    "Hibernation Sliver",
+    4
+   ],
+   [
+    "Acidic Sliver",
+    4
+   ],
+   [
+    "Counterspell",
+    4
+   ],
+   [
+    "Force of Will",
+    4
+   ],
+   [
+    "Misdirection",
+    2
+   ],
+   [
+    "Swords to Plowshares",
+    2
+   ],
+   [
+    "Disenchant",
+    2
+   ],
+   [
+    "Perish",
+    3
+   ],
+   [
+    "Underground Sea",
+    4
+   ],
+   [
+    "Tundra",
+    3
+   ],
+   [
+    "Scrubland",
+    2
+   ],
+   [
+    "Tropical Island",
+    1
+   ],
+   [
+    "Volcanic Island",
+    1
+   ],
+   [
+    "City of Brass",
+    4
+   ],
+   [
+    "Flood Plain",
+    4
+   ],
+   [
+    "Gemstone Mine",
+    2
+   ],
+   [
+    "Undiscovered Paradise",
+    2
+   ]
+  ]
+ },
+ "slivers-legacy": {
+  "name": "裂片妖 Legacy",
+  "era": "Legacy 2015",
+  "size": 60,
+  "cards": [
+   [
+    "Crystalline Sliver",
+    4
+   ],
+   [
+    "Galerider Sliver",
+    4
+   ],
+   [
+    "Muscle Sliver",
+    4
+   ],
+   [
+    "Predatory Sliver",
+    4
+   ],
+   [
+    "Sinew Sliver",
+    4
+   ],
+   [
+    "Striking Sliver",
+    3
+   ],
+   [
+    "Hibernation Sliver",
+    3
+   ],
+   [
+    "Hunter Sliver",
+    2
+   ],
+   [
+    "Syphon Sliver",
+    2
+   ],
+   [
+    "Venom Sliver",
+    2
+   ],
+   [
+    "Aether Vial",
+    4
+   ],
+   [
+    "Force of Will",
+    4
+   ],
+   [
+    "Ancient Ziggurat",
+    4
+   ],
+   [
+    "Cavern of Souls",
+    4
+   ],
+   [
+    "Mutavault",
+    4
+   ],
+   [
+    "Sliver Hive",
+    4
+   ],
+   [
+    "Mana Confluence",
+    3
+   ],
+   [
+    "Karakas",
+    1
+   ]
+  ]
+ },
+ "slivers-modern": {
+  "name": "裂片妖 Modern",
+  "era": "Modern 2015",
+  "size": 60,
+  "cards": [
+   [
+    "Galerider Sliver",
+    4
+   ],
+   [
+    "Manaweft Sliver",
+    4
+   ],
+   [
+    "Predatory Sliver",
+    4
+   ],
+   [
+    "Sinew Sliver",
+    4
+   ],
+   [
+    "Diffusion Sliver",
+    3
+   ],
+   [
+    "Sedge Sliver",
+    3
+   ],
+   [
+    "Blur Sliver",
+    2
+   ],
+   [
+    "Necrotic Sliver",
+    2
+   ],
+   [
+    "Sentinel Sliver",
+    2
+   ],
+   [
+    "Darkheart Sliver",
+    1
+   ],
+   [
+    "Syphon Sliver",
+    1
+   ],
+   [
+    "Aether Vial",
+    4
+   ],
+   [
+    "Collected Company",
+    4
+   ],
+   [
+    "Abrupt Decay",
+    2
+   ],
+   [
+    "Sliver Hive",
+    4
+   ],
+   [
+    "Cavern of Souls",
+    4
+   ],
+   [
+    "Mutavault",
+    4
+   ],
+   [
+    "Windswept Heath",
+    2
+   ],
+   [
+    "Overgrown Tomb",
+    2
+   ],
+   [
+    "Wooded Foothills",
+    1
+   ],
+   [
+    "Breeding Pool",
+    1
+   ],
+   [
+    "Blood Crypt",
+    1
+   ],
+   [
+    "Forest",
+    1
+   ]
+  ]
+ },
+ "tron": {
+  "name": "Eldrazi 鐵三角",
+  "era": "Modern",
+  "size": 60,
+  "cards": [
+   [
+    "Matter Reshaper",
+    4
+   ],
+   [
+    "Thought-Knot Seer",
+    4
+   ],
+   [
+    "Reality Smasher",
+    4
+   ],
+   [
+    "Walking Ballista",
+    3
+   ],
+   [
+    "Endbringer",
+    1
+   ],
+   [
+    "Ulamog, the Ceaseless Hunger",
+    1
+   ],
+   [
+    "Karn, the Great Creator",
+    4
+   ],
+   [
+    "Karn Liberated",
+    1
+   ],
+   [
+    "Chalice of the Void",
+    4
+   ],
+   [
+    "Expedition Map",
+    4
+   ],
+   [
+    "Basilisk Collar",
+    1
+   ],
+   [
+    "Relic of Progenitus",
+    1
+   ],
+   [
+    "Dismember",
+    2
+   ],
+   [
+    "Warping Wail",
+    2
+   ],
+   [
+    "All Is Dust",
+    1
+   ],
+   [
+    "Urza's Mine",
+    4
+   ],
+   [
+    "Urza's Power Plant",
+    4
+   ],
+   [
+    "Urza's Tower",
+    4
+   ],
+   [
+    "Eldrazi Temple",
+    4
+   ],
+   [
+    "Blast Zone",
+    2
+   ],
+   [
+    "Cavern of Souls",
+    2
+   ],
+   [
+    "Ghost Quarter",
+    1
+   ],
+   [
+    "Wastes",
+    2
+   ]
+  ]
+ },
+ "winter": {
+  "name": "Eldrazi 寒冬",
+  "era": "Modern 2016",
+  "size": 60,
+  "cards": [
+   [
+    "Eldrazi Mimic",
+    4
+   ],
+   [
+    "Endless One",
+    4
+   ],
+   [
+    "Matter Reshaper",
+    4
+   ],
+   [
+    "Thought-Knot Seer",
+    4
+   ],
+   [
+    "Reality Smasher",
+    4
+   ],
+   [
+    "Simian Spirit Guide",
+    4
+   ],
+   [
+    "Spellskite",
+    2
+   ],
+   [
+    "Chalice of the Void",
+    4
+   ],
+   [
+    "Ratchet Bomb",
+    2
+   ],
+   [
+    "Dismember",
+    4
+   ],
+   [
+    "Eldrazi Temple",
+    4
+   ],
+   [
+    "Eye of Ugin",
+    4
+   ],
+   [
+    "Ghost Quarter",
+    4
+   ],
+   [
+    "Blinkmoth Nexus",
+    4
+   ],
+   [
+    "Mutavault",
+    3
+   ],
+   [
+    "Urborg, Tomb of Yawgmoth",
+    3
+   ],
+   [
+    "Wastes",
+    2
+   ]
+  ]
+ },
+ "ramp": {
+  "name": "Eldrazi 狂飆",
+  "era": "標準 2010",
+  "size": 60,
+  "cards": [
+   [
+    "Joraga Treespeaker",
+    4
+   ],
+   [
+    "Overgrown Battlement",
+    4
+   ],
+   [
+    "Primeval Titan",
+    4
+   ],
+   [
+    "Ulamog, the Infinite Gyre",
+    2
+   ],
+   [
+    "Emrakul, the Aeons Torn",
+    1
+   ],
+   [
+    "Avenger of Zendikar",
+    1
+   ],
+   [
+    "Terastodon",
+    1
+   ],
+   [
+    "Wurmcoil Engine",
+    1
+   ],
+   [
+    "Explore",
+    4
+   ],
+   [
+    "Growth Spasm",
+    4
+   ],
+   [
+    "Cultivate",
+    1
+   ],
+   [
+    "Summoning Trap",
+    4
+   ],
+   [
+    "Everflowing Chalice",
+    3
+   ],
+   [
+    "Eldrazi Temple",
+    4
+   ],
+   [
+    "Eye of Ugin",
+    1
+   ],
+   [
+    "Forest",
+    12
+   ],
+   [
+    "Khalni Garden",
+    4
+   ],
+   [
+    "Mystifying Maze",
+    1
+   ],
+   [
+    "Tectonic Edge",
+    4
+   ]
+  ]
+ },
+ "rebel": {
+  "name": "馬凱迪亞白色叛軍",
+  "era": "馬凱迪亞",
+  "size": 60,
+  "cards": [
+   [
+    "Ramosian Sergeant",
+    3
+   ],
+   [
+    "Steadfast Guard",
+    4
+   ],
+   [
+    "Ramosian Lieutenant",
+    2
+   ],
+   [
+    "Lin Sivvi, Defiant Hero",
+    4
+   ],
+   [
+    "Voice of Truth",
+    3
+   ],
+   [
+    "Ramosian Sky Marshal",
+    1
+   ],
+   [
+    "Jhovall Queen",
+    1
+   ],
+   [
+    "Parallax Wave",
+    4
+   ],
+   [
+    "Reverent Mantra",
+    4
+   ],
+   [
+    "Story Circle",
+    4
+   ],
+   [
+    "Disenchant",
+    2
+   ],
+   [
+    "Seal of Cleansing",
+    2
+   ],
+   [
+    "Plains",
+    22
+   ],
+   [
+    "Rishadan Port",
+    4
+   ]
+  ]
+ },
+ "STARTER40-green-deck": {
+  "name": "STARTER40 綠色 森林巨獸狂轟",
+  "era": "新手入門",
+  "size": 40,
+  "cards": [
+   [
+    "Llanowar Elves",
+    4
+   ],
+   [
+    "Kalonian Tusker",
+    4
+   ],
+   [
+    "Leatherback Baloth",
+    3
+   ],
+   [
+    "Giant Spider",
+    2
+   ],
+   [
+    "Colossal Dreadmaw",
+    2
+   ],
+   [
+    "Gigantosaurus",
+    1
+   ],
+   [
+    "Giant Growth",
+    3
+   ],
+   [
+    "Titanic Growth",
+    1
+   ],
+   [
+    "Rabid Bite",
+    2
+   ],
+   [
+    "Plummet",
+    2
+   ],
+   [
+    "Forest",
+    16
+   ]
+  ]
+ },
+ "STARTER40-red-deck": {
+  "name": "STARTER40 紅色 星火飛龍強襲",
+  "era": "新手入門",
+  "size": 40,
+  "cards": [
+   [
+    "Raging Goblin",
+    4
+   ],
+   [
+    "Goblin Arsonist",
+    3
+   ],
+   [
+    "Valley Dasher",
+    4
+   ],
+   [
+    "Dragon Egg",
+    1
+   ],
+   [
+    "Shivan Dragon",
+    3
+   ],
+   [
+    "Lightning Bolt",
+    4
+   ],
+   [
+    "Searing Spear",
+    3
+   ],
+   [
+    "Act of Treason",
+    2
+   ],
+   [
+    "Mountain",
+    16
+   ]
+  ]
+ },
+ "STARTER40-white-deck": {
+  "name": "STARTER40 白色 天使與正義防線",
+  "era": "新手入門",
+  "size": 40,
+  "cards": [
+   [
+    "Elite Vanguard",
+    4
+   ],
+   [
+    "Pegasus Courser",
+    4
+   ],
+   [
+    "Inspiring Captain",
+    4
+   ],
+   [
+    "Serra Angel",
+    2
+   ],
+   [
+    "Lyra Dawnbringer",
+    1
+   ],
+   [
+    "Pacifism",
+    4
+   ],
+   [
+    "Swords to Plowshares",
+    2
+   ],
+   [
+    "Raise the Alarm",
+    3
+   ],
+   [
+    "Plains",
+    16
+   ]
+  ]
+ },
+ "STARTER40-black-deck": {
+  "name": "STARTER40 黑色 不死軍團與惡魔",
+  "era": "新手入門",
+  "size": 40,
+  "cards": [
+   [
+    "Carnophage",
+    3
+   ],
+   [
+    "Cursed Minotaur",
+    3
+   ],
+   [
+    "Vampire Nighthawk",
+    4
+   ],
+   [
+    "Abyssal Specter",
+    2
+   ],
+   [
+    "Gravewaker",
+    2
+   ],
+   [
+    "Nightmare",
+    1
+   ],
+   [
+    "Murder",
+    4
+   ],
+   [
+    "Mind Rot",
+    3
+   ],
+   [
+    "Sign in Blood",
+    2
+   ],
+   [
+    "Swamp",
+    16
+   ]
+  ]
+ },
+ "STARTER40-blue-deck": {
+  "name": "STARTER40 藍色 風暴反擊與斯芬克斯",
+  "era": "新手入門",
+  "size": 40,
+  "cards": [
+   [
+    "Storm Crow",
+    4
+   ],
+   [
+    "Welkin Tern",
+    2
+   ],
+   [
+    "Cloudkin Seer",
+    2
+   ],
+   [
+    "Warden of Evos Isle",
+    4
+   ],
+   [
+    "Mahamoti Djinn",
+    2
+   ],
+   [
+    "Riddlemaster Sphinx",
+    1
+   ],
+   [
+    "Unsummon",
+    3
+   ],
+   [
+    "Cancel",
+    4
+   ],
+   [
+    "Divination",
+    2
+   ],
+   [
+    "Island",
+    16
+   ]
+  ]
+ }
+};

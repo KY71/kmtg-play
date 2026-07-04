@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MTG 自由桌面</title>
+<style>
+  :root {
+    --bg: #0e0e11; --surface: #17171b; --surface2: #1f1f25; --surface3: #2c2c34;
+    --text: #f0f0f0; --text2: #a2a2ab; --text3: #66666f;
+    --green: #7fcc40; --blue: #60b8ff; --red: #ff6a3a; --gold: #ffd060;
+    --radius: 12px;
+    /* 卡片尺寸跟著螢幕高度算：整個畫面約 6.5~7 個卡高
+       （每人：手牌 1 行 + 戰場 2 行，加上工具列與緩衝） */
+    --card-h: clamp(120px, 13.5vh, 260px);
+    --card-w: calc(var(--card-h) * 0.7155);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg); color: var(--text); font-size: 13px; overflow: hidden;
+    user-select: none; -webkit-user-select: none; }
+
+  .table { display: flex; flex-direction: column; height: 100vh; gap: 6px; padding: 8px; }
+
+  /* ══ 玩家半場 ══ */
+  .half { flex: 1; display: flex; gap: 8px; min-height: 0; }
+
+  /* ── 側欄（兩欄式，寬度＝兩張卡，不需捲動）── */
+  .rail { width: calc(var(--card-w) * 2 + 36px); flex-shrink: 0; display: flex;
+    flex-direction: column; gap: 9px; padding: 12px 10px; border-radius: var(--radius);
+    overflow-y: auto; }
+  .p1 .rail { background: #191e14; }
+  .p2 .rail { background: #141a21; }
+  .rail::-webkit-scrollbar { width: 4px; }
+  .rail::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+  .pname { font-size: 13px; font-weight: 700; text-align: center; color: var(--text2);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* 生命（數字＋2×2 按鈕橫排） */
+  .life-box { display: flex; align-items: center; justify-content: center; gap: 14px; }
+  .life-val { font-size: 46px; font-weight: 800; line-height: 1.1; cursor: pointer; }
+  .p1 .life-val { color: var(--green); }
+  .p2 .life-val { color: var(--blue); }
+  .life-val.danger { color: var(--red) !important; }
+  .life-btns { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; }
+
+  /* 通用小按鈕（無框線） */
+  .btn { font-size: 12px; padding: 5px 9px; background: var(--surface3); color: var(--text2);
+    border: none; border-radius: 7px; cursor: pointer; line-height: 1.2;
+    transition: background .15s, color .15s; }
+  .btn:hover { color: var(--text); background: #3a3a44; }
+  .btn:active { transform: scale(.95); }
+
+  /* 牌堆（牌庫整張卡高；墳場/流放各半高疊在右欄） */
+  .piles-row { display: flex; gap: 8px; justify-content: center; }
+  .pile-col { display: flex; flex-direction: column; gap: 8px; }
+  .pile { position: relative; width: var(--card-w); border-radius: 8px; cursor: pointer; }
+  .pile.library { height: var(--card-h);
+    background: radial-gradient(ellipse at 30% 30%, #1c3a6a, #050e22);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px; color: rgba(255,255,255,.15); }
+  .pile.small { height: calc((var(--card-h) - 8px) / 2); }
+  .pile.empty-pile { background: rgba(255,255,255,.05); }
+  .pile .zlabel { position: absolute; top: 4px; left: 7px; font-size: 12px;
+    color: rgba(255,255,255,.75); text-shadow: 0 1px 3px #000; z-index: 2;
+    pointer-events: none; }
+  .pile .count { position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,.8);
+    color: #fff; font-size: 14px; font-weight: 700; padding: 1px 8px; border-radius: 5px;
+    pointer-events: none; z-index: 2; }
+  .pile img { position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: top center; border-radius: 8px;
+    pointer-events: none; }
+  /* 牌庫上下半的置頂/置底提示（拖曳中顯示） */
+  .pile.library .drop-hint { display: none; position: absolute; left: 0; right: 0;
+    text-align: center; font-size: 11px; color: var(--gold); background: rgba(0,0,0,.65);
+    padding: 2px 0; pointer-events: none; z-index: 3; }
+  body.dragging .pile.library .drop-hint.top { display: block; top: 0; border-radius: 8px 8px 0 0; }
+  body.dragging .pile.library .drop-hint.bot { display: block; bottom: 0; border-radius: 0 0 8px 8px; }
+
+  .rail-btns { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
+
+  /* ── 主區（手牌 + 戰場）── */
+  .main-area { flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .p2 .main-area { flex-direction: column-reverse; } /* 玩家2：手牌在上、戰場在下 */
+
+  .battlefield { flex: 1; position: relative; overflow: hidden;
+    border-radius: var(--radius); min-height: 0; }
+  .p1 .battlefield { background: #171d11; }
+  .p2 .battlefield { background: #11191f; }
+  .bf-tag { position: absolute; top: 6px; left: 10px; font-size: 11px; color: var(--text3);
+    pointer-events: none; letter-spacing: .08em; }
+
+  .hand { height: calc(var(--card-h) + 24px); flex-shrink: 0; display: flex; gap: 6px;
+    align-items: center; padding: 6px 10px; background: var(--surface2);
+    border-radius: var(--radius); overflow-x: auto; overflow-y: hidden; }
+  .hand::-webkit-scrollbar { height: 5px; }
+  .hand::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+  .hand-count { flex-shrink: 0; display: flex; flex-direction: column; align-items: center;
+    gap: 2px; font-size: 11px; color: var(--text3); width: 34px; }
+  .hand-count b { font-size: 17px; color: var(--gold); }
+
+  /* ══ 中央工具列 ══ */
+  .midbar { flex-shrink: 0; display: flex; align-items: center; gap: 8px;
+    padding: 6px 12px; background: var(--surface2);
+    border-radius: var(--radius); flex-wrap: nowrap; overflow-x: auto; }
+  .turn-num { font-size: 16px; font-weight: 700; color: var(--gold); white-space: nowrap; }
+  .midlog { flex: 1; font-size: 13px; color: #d0c080; text-align: center;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 60px; }
+
+  /* ══ 卡片 ══ */
+  .card { position: relative; width: var(--card-w); height: var(--card-h);
+    border-radius: 6px; cursor: grab; flex-shrink: 0;
+    transition: transform .22s cubic-bezier(.2,.8,.25,1), box-shadow .22s; touch-action: none; }
+  .card img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px;
+    pointer-events: none; display: block; }
+  .card:not(.tapped):hover { transform: translateY(-4px) scale(1.05); z-index: 60;
+    box-shadow: 0 10px 26px rgba(0,0,0,.65); }
+  .card.tapped { transform: rotate(90deg); }
+  .card.tapped:hover { transform: rotate(90deg) scale(1.05); z-index: 60; }
+  .card.on-bf { position: absolute; }
+  .card.face-down .front { display: none; }
+  .card .back { display: none; width: 100%; height: 100%; border-radius: 6px;
+    background: radial-gradient(ellipse at 30% 30%, #1c3a6a, #050e22);
+    align-items: center; justify-content: center;
+    font-size: 22px; color: rgba(255,255,255,.15); }
+  .card.face-down .back { display: flex; }
+  .card.drag-ghost { position: fixed; z-index: 999; pointer-events: none;
+    transition: none; box-shadow: 0 8px 30px rgba(0,0,0,.8); }
+  /* 文字卡（token 或缺圖） */
+  .card .txt { width: 100%; height: 100%; border-radius: 6px;
+    background: var(--surface3); display: flex; flex-direction: column; align-items: center;
+    justify-content: center; text-align: center; color: var(--text);
+    font-size: calc(var(--card-h) * 0.095); padding: 5px; gap: 5px; }
+  .card.token .txt { background: #1d2a16; }
+  .card .txt .tpt { font-size: calc(var(--card-h) * 0.12); font-weight: 800; color: var(--gold); }
+  /* 指示物徽章 */
+  .badges { position: absolute; top: 3px; left: 3px; display: flex; flex-direction: column;
+    gap: 2px; z-index: 2; }
+  .badge { font-size: calc(var(--card-h) * 0.088); font-weight: 700; padding: 1px 5px;
+    border-radius: 5px; cursor: pointer; }
+  .badge.p1p1 { background: #2d6010; color: #cfc; }
+  .badge.m1m1 { background: #601010; color: #fcc; }
+  .badge.p1p0 { background: #0f4a44; color: #aef; }
+  .badge.m0m1 { background: #4a3210; color: #fda; }
+  .badge.gen  { background: #555; color: #eee; }
+  /* 現在 P/T（含指示物加成） */
+  .ptnow { position: absolute; bottom: 3px; right: 3px; font-weight: 800;
+    font-size: calc(var(--card-h) * 0.1); padding: 1px 6px; border-radius: 5px;
+    background: rgba(0,0,0,.78); color: #fff; pointer-events: none; z-index: 2; }
+  .ptnow.mod { background: var(--gold); color: #000; }
+
+  /* 飛行動畫用的替身 */
+  .fly { position: fixed; z-index: 900; pointer-events: none; border-radius: 6px;
+    overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,.6); }
+  .fly img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ══ 指示物托盤 ══ */
+  .chip-tray { display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; }
+  .chip { min-width: 32px; height: 27px; border-radius: 14px; padding: 0 8px;
+    font-size: 10px; font-weight: 800; display: flex; align-items: center;
+    justify-content: center; cursor: grab; touch-action: none; flex-shrink: 0; }
+  .chip.p1p1 { background: #2d6010; color: #cfc; }
+  .chip.m1m1 { background: #601010; color: #fcc; }
+  .chip.p1p0 { background: #0f4a44; color: #aef; }
+  .chip.m0m1 { background: #4a3210; color: #fda; }
+  .chip.gen  { background: #555; color: #eee; }
+  .chip.drag-ghost { position: fixed; z-index: 999; pointer-events: none; }
+
+  /* ══ 檢視器（牌庫/墳場/流放 攤開）══ */
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.78); z-index: 500;
+    display: none; align-items: center; justify-content: center; }
+  .overlay.show { display: flex; }
+  .panel { background: var(--surface2); border-radius: 16px;
+    max-width: 88vw; max-height: 86vh; display: flex; flex-direction: column; }
+  .panel-head { display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+    background: var(--surface3); border-radius: 16px 16px 0 0; }
+  .panel-title { font-size: 15px; font-weight: 700; }
+  .panel-head .spacer { flex: 1; }
+  .panel-body { padding: 14px; overflow-y: auto; display: flex; flex-wrap: wrap; gap: 10px;
+    align-content: flex-start; }
+  .v-item { width: var(--card-w); display: flex; flex-direction: column; gap: 4px; }
+  .v-item .vbtns { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; }
+  .v-item .btn { padding: 3px 5px; font-size: 10px; }
+  .v-idx { font-size: 11px; color: var(--gold); text-align: center; }
+
+  /* ══ 檢查器（hover 大圖 + 規則文字）══ */
+  .inspector { position: fixed; z-index: 950; width: 360px; pointer-events: none;
+    display: none; flex-direction: column; gap: 8px; }
+  .inspector.show { display: flex; }
+  .inspector img { width: 360px; max-height: 60vh; object-fit: contain;
+    border-radius: 16px; box-shadow: 0 12px 48px rgba(0,0,0,.9); }
+  .inspector .itext { background: rgba(18,18,22,.96); border-radius: 10px;
+    padding: 10px 12px; font-size: 12.5px; line-height: 1.5;
+    color: var(--text); white-space: pre-wrap; max-height: 28vh; overflow: hidden; }
+  .inspector .itext .icost { color: var(--gold); font-weight: 700; }
+  .inspector .itext .itype { color: var(--text2); }
+
+  /* ══ 開局設定 ══ */
+  .setup-panel { gap: 16px; padding: 28px 32px; display: flex; flex-direction: column;
+    background: var(--surface2); border-radius: 16px; }
+  .setup-panel h1 { font-size: 20px; color: var(--gold); }
+  .setup-row { display: flex; align-items: center; gap: 10px; }
+  .setup-row label { width: 140px; font-size: 14px; }
+  select { background: var(--surface3); color: var(--text); border: none;
+    border-radius: 8px; padding: 8px 10px; font-size: 14px; }
+  .big-btn { font-size: 15px; font-weight: 700; padding: 10px 22px; border-radius: 9px;
+    background: #2d6010; color: #fff; border: none; cursor: pointer; }
+  .big-btn:hover { background: #3a7a18; }
+  .setup-note { font-size: 12px; color: var(--text3); }
+
+  /* token 產生器 */
+  .token-form { display: flex; flex-direction: column; gap: 12px; padding: 18px 22px; }
+  .token-presets { display: flex; flex-wrap: wrap; gap: 7px; max-width: 420px; }
+  .token-form input { background: var(--surface3); color: var(--text); border: none;
+    border-radius: 8px; padding: 7px 10px; font-size: 13px; width: 150px; }
+</style>
+</head>
+<body>
+
+<div class="table">
+
+  <!-- ══ 玩家2（上方）══ -->
+  <div class="half p2">
+    <div class="rail">
+      <div class="pname" id="p2-name">玩家 2</div>
+      <div class="life-box">
+        <div class="life-val" id="p2-life" title="點擊直接輸入">20</div>
+        <div class="life-btns">
+          <button class="btn" onclick="life('p2',-1)">−1</button>
+          <button class="btn" onclick="life('p2',1)">＋1</button>
+          <button class="btn" onclick="life('p2',-5)">−5</button>
+          <button class="btn" onclick="life('p2',5)">＋5</button>
+        </div>
+      </div>
+      <div class="piles-row">
+        <div class="pile library" data-zone="library" data-p="p2" title="點擊抽 1 張">🂠
+          <div class="zlabel">牌庫</div>
+          <div class="drop-hint top">置頂</div><div class="drop-hint bot">置底</div>
+          <div class="count" id="p2-libc">0</div>
+        </div>
+        <div class="pile-col">
+          <div class="pile small empty-pile" data-zone="graveyard" data-p="p2" id="p2-grave"
+               title="點擊攤開檢視"><div class="zlabel">墳場</div><div class="count" id="p2-gravec">0</div></div>
+          <div class="pile small empty-pile" data-zone="exile" data-p="p2" id="p2-exile"
+               title="點擊攤開檢視"><div class="zlabel">流放</div><div class="count" id="p2-exilec">0</div></div>
+        </div>
+      </div>
+      <div class="rail-btns">
+        <button class="btn" onclick="shuffleLib('p2')">洗牌</button>
+        <button class="btn" onclick="openViewer('p2','library')">檢視</button>
+        <button class="btn" onclick="peekTop('p2')">頂X</button>
+        <button class="btn" onclick="mill('p2')">磨1</button>
+      </div>
+      <div class="chip-tray">
+        <div class="chip p1p1" data-chip="p1p1" title="+1/+1 指示物：拖到卡上">+1/+1</div>
+        <div class="chip m1m1" data-chip="m1m1" title="−1/−1 指示物：拖到卡上">−1/−1</div>
+        <div class="chip p1p0" data-chip="p1p0" title="+1/+0 指示物：拖到卡上">+1/+0</div>
+        <div class="chip m0m1" data-chip="m0m1" title="−0/−1 指示物：拖到卡上">−0/−1</div>
+        <div class="chip gen" data-chip="gen" title="通用計數器：拖到卡上（Echo、消退等自行賦義）">●</div>
+      </div>
+      <div class="rail-btns">
+        <button class="btn" onclick="untapAll('p2')">全部解橫</button>
+        <button class="btn" onclick="openTokenMaker('p2')">產Token</button>
+        <button class="btn" onclick="mulligan('p2')">重抽7</button>
+      </div>
+    </div>
+    <div class="main-area">
+      <div class="battlefield" data-zone="battlefield" data-p="p2" id="p2-bf">
+        <div class="bf-tag">玩家 2 戰場</div>
+      </div>
+      <div class="hand" data-zone="hand" data-p="p2" id="p2-hand">
+        <div class="hand-count">手牌<b id="p2-handc">0</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 中央工具列 ══ -->
+  <div class="midbar">
+    <span class="turn-num" id="turn-num">回合 1</span>
+    <button class="btn" onclick="nextTurn()">回合＋1</button>
+    <div class="midlog" id="midlog">拖曳卡片到任何區域；點擊戰場的卡橫置；雙擊翻面。</div>
+    <button class="btn" onclick="roll('coin')">擲硬幣</button>
+    <button class="btn" onclick="roll(6)">D6</button>
+    <button class="btn" onclick="roll(20)">D20</button>
+    <button class="btn" onclick="newGame()">新局</button>
+  </div>
+
+  <!-- ══ 玩家1（下方）══ -->
+  <div class="half p1">
+    <div class="rail">
+      <div class="pname" id="p1-name">玩家 1</div>
+      <div class="life-box">
+        <div class="life-val" id="p1-life" title="點擊直接輸入">20</div>
+        <div class="life-btns">
+          <button class="btn" onclick="life('p1',-1)">−1</button>
+          <button class="btn" onclick="life('p1',1)">＋1</button>
+          <button class="btn" onclick="life('p1',-5)">−5</button>
+          <button class="btn" onclick="life('p1',5)">＋5</button>
+        </div>
+      </div>
+      <div class="piles-row">
+        <div class="pile library" data-zone="library" data-p="p1" title="點擊抽 1 張">🂠
+          <div class="zlabel">牌庫</div>
+          <div class="drop-hint top">置頂</div><div class="drop-hint bot">置底</div>
+          <div class="count" id="p1-libc">0</div>
+        </div>
+        <div class="pile-col">
+          <div class="pile small empty-pile" data-zone="graveyard" data-p="p1" id="p1-grave"
+               title="點擊攤開檢視"><div class="zlabel">墳場</div><div class="count" id="p1-gravec">0</div></div>
+          <div class="pile small empty-pile" data-zone="exile" data-p="p1" id="p1-exile"
+               title="點擊攤開檢視"><div class="zlabel">流放</div><div class="count" id="p1-exilec">0</div></div>
+        </div>
+      </div>
+      <div class="rail-btns">
+        <button class="btn" onclick="shuffleLib('p1')">洗牌</button>
+        <button class="btn" onclick="openViewer('p1','library')">檢視</button>
+        <button class="btn" onclick="peekTop('p1')">頂X</button>
+        <button class="btn" onclick="mill('p1')">磨1</button>
+      </div>
+      <div class="chip-tray">
+        <div class="chip p1p1" data-chip="p1p1" title="+1/+1 指示物：拖到卡上">+1/+1</div>
+        <div class="chip m1m1" data-chip="m1m1" title="−1/−1 指示物：拖到卡上">−1/−1</div>
+        <div class="chip p1p0" data-chip="p1p0" title="+1/+0 指示物：拖到卡上">+1/+0</div>
+        <div class="chip m0m1" data-chip="m0m1" title="−0/−1 指示物：拖到卡上">−0/−1</div>
+        <div class="chip gen" data-chip="gen" title="通用計數器：拖到卡上（Echo、消退等自行賦義）">●</div>
+      </div>
+      <div class="rail-btns">
+        <button class="btn" onclick="untapAll('p1')">全部解橫</button>
+        <button class="btn" onclick="openTokenMaker('p1')">產Token</button>
+        <button class="btn" onclick="mulligan('p1')">重抽7</button>
+      </div>
+    </div>
+    <div class="main-area">
+      <div class="battlefield" data-zone="battlefield" data-p="p1" id="p1-bf">
+        <div class="bf-tag">玩家 1 戰場</div>
+      </div>
+      <div class="hand" data-zone="hand" data-p="p1" id="p1-hand">
+        <div class="hand-count">手牌<b id="p1-handc">0</b></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 檢查器 -->
+<div class="inspector" id="inspector">
+  <img id="insp-img" alt="">
+  <div class="itext" id="insp-text"></div>
+</div>
+
+<!-- 區域檢視器 -->
+<div class="overlay" id="viewer-overlay">
+  <div class="panel">
+    <div class="panel-head">
+      <div class="panel-title" id="viewer-title"></div>
+      <div class="spacer"></div>
+      <button class="btn" id="viewer-shuffle" onclick="viewerShuffle()">洗牌</button>
+      <button class="btn" onclick="closeViewer()">關閉 ✕</button>
+    </div>
+    <div class="panel-body" id="viewer-body"></div>
+  </div>
+</div>
+
+<!-- 開局設定 -->
+<div class="overlay show" id="setup-overlay">
+  <div class="setup-panel">
+    <h1>🃏 MTG 自由桌面 — 開新局</h1>
+    <div class="setup-row"><label>玩家 1（下方）牌組</label><select id="sel-p1"></select></div>
+    <div class="setup-row"><label>玩家 2（上方）牌組</label><select id="sel-p2"></select></div>
+    <div class="setup-row">
+      <button class="big-btn" onclick="startGame()">洗牌並各抽 7 張</button>
+      <button class="btn" id="resume-btn" style="display:none" onclick="resumeGame()">繼續上一局</button>
+    </div>
+    <div class="setup-note">規則計算（法力、傷害、勝負）由玩家自行進行，桌面只提供道具。</div>
+  </div>
+</div>
+
+<!-- token 產生器 -->
+<div class="overlay" id="token-overlay">
+  <div class="panel">
+    <div class="panel-head">
+      <div class="panel-title" id="token-title">產生 Token</div>
+      <div class="spacer"></div>
+      <button class="btn" onclick="closeTokenMaker()">關閉 ✕</button>
+    </div>
+    <div class="token-form">
+      <div class="token-presets" id="token-presets"></div>
+      <div class="setup-row">
+        <input id="tok-name" placeholder="名稱（如 Squirrel）">
+        <input id="tok-pt" placeholder="P/T（如 1/1，可留白）" style="width:170px">
+        <button class="btn" onclick="makeCustomToken()">產生</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="cards.js"></script>
+<script src="decks.js"></script>
+<script>
+'use strict';
+const LS_KEY = 'kmtg_tabletop_v1';
+const SF_IMG = n => `https://api.scryfall.com/cards/named?exact=${encodeURIComponent(n)}&format=image&version=normal`;
+const slug = n => n.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const localImg = n => `decks/cards/${slug(n)}.jpg`;
+
+let CARDS = {}, DECKS = {};
+let S = null;          // 遊戲狀態
+let nextId = 1;
+
+/* ───────── 狀態 ───────── */
+function blankPlayer(deckId) {
+  return { deckId, life: 20, library: [], hand: [], battlefield: [], graveyard: [], exile: [] };
+}
+function newCard(name, extra) {
+  return Object.assign({ id: nextId++, name, tapped: false, faceDown: false,
+    x: 20, y: 20, counters: {} }, extra || {});
+}
+function save() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify({ S, nextId })); } catch (e) {}
+}
+function log(msg) { document.getElementById('midlog').textContent = msg; }
+
+/* ───────── 初始化（資料由 cards.js / decks.js 提供，file:// 直接開也能玩）───────── */
+CARDS = window.CARDS_DATA || {};
+DECKS = window.DECKS_DATA || {};
+if (!Object.keys(DECKS).length) {
+  document.querySelector('.setup-note').textContent =
+    '找不到牌組資料：請先執行 python3 fetch_cards.py --all 產生 cards.js / decks.js。';
+} else {
+  const opts = Object.entries(DECKS)
+    .map(([k, v]) => `<option value="${k}">${v.name}（${v.era}）</option>`).join('');
+  document.getElementById('sel-p1').innerHTML = opts;
+  document.getElementById('sel-p2').innerHTML = opts;
+  document.getElementById('sel-p2').selectedIndex = 1;
+}
+if (localStorage.getItem(LS_KEY)) document.getElementById('resume-btn').style.display = '';
+
+function startGame() {
+  const d1 = document.getElementById('sel-p1').value;
+  const d2 = document.getElementById('sel-p2').value;
+  nextId = 1;
+  S = { turn: 1, players: { p1: blankPlayer(d1), p2: blankPlayer(d2) } };
+  for (const p of ['p1', 'p2']) {
+    const deck = DECKS[S.players[p].deckId];
+    const lib = [];
+    for (const [name, cnt] of deck.cards) for (let i = 0; i < cnt; i++) lib.push(newCard(name));
+    shuffle(lib);
+    S.players[p].library = lib;
+    S.players[p].hand = lib.splice(0, 7);
+  }
+  document.getElementById('setup-overlay').classList.remove('show');
+  log('新局開始！雙方各抽 7 張。先用擲硬幣決定先手吧。');
+  renderAll(); save();
+}
+function resumeGame() {
+  try {
+    const d = JSON.parse(localStorage.getItem(LS_KEY));
+    S = d.S; nextId = d.nextId;
+    document.getElementById('setup-overlay').classList.remove('show');
+    log('已載入上一局。'); renderAll();
+  } catch (e) { log('載入失敗，請開新局。'); }
+}
+function newGame() {
+  if (S && !confirm('開新局會清掉目前桌面，確定？')) return;
+  document.getElementById('setup-overlay').classList.add('show');
+}
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]];
+  }
+}
+
+/* ───────── 基本操作 ───────── */
+function life(p, d) {
+  S.players[p].life += d; renderLife(p); save();
+}
+function setLifeByPrompt(p) {
+  const v = prompt('生命設為：', S.players[p].life);
+  if (v !== null && v.trim() !== '' && !isNaN(+v)) { S.players[p].life = +v; renderLife(p); save(); }
+}
+function draw(p) {
+  const pl = S.players[p];
+  if (!pl.library.length) { log(`${pname(p)} 牌庫是空的！`); return; }
+  const card = pl.library.shift();
+  pl.hand.push(card);
+  renderPlayer(p); save();
+  flyBetween(card, `.pile[data-zone="library"][data-p="${p}"]`, `#${p}-hand .card[data-id="${card.id}"]`);
+}
+function mill(p) {
+  const pl = S.players[p];
+  if (!pl.library.length) { log(`${pname(p)} 牌庫是空的！`); return; }
+  const c = pl.library.shift(); resetCard(c); pl.graveyard.push(c);
+  log(`${pname(p)} 磨掉了 ${c.name}`); renderPlayer(p); save();
+  flyBetween(c, `.pile[data-zone="library"][data-p="${p}"]`, `.pile[data-zone="graveyard"][data-p="${p}"]`);
+}
+function shuffleLib(p) {
+  shuffle(S.players[p].library); log(`${pname(p)} 洗了牌庫`); renderPlayer(p); save();
+}
+function untapAll(p) {
+  for (const c of S.players[p].battlefield) c.tapped = false;
+  // 不重繪，讓 CSS transition 播放旋轉動畫
+  document.querySelectorAll(`#${p}-bf .card.tapped`).forEach(e => e.classList.remove('tapped'));
+  save();
+}
+function mulligan(p) {
+  if (!confirm(`${pname(p)}：把手牌洗回牌庫，重抽 7 張？`)) return;
+  const pl = S.players[p];
+  for (const c of pl.hand) resetCard(c);
+  pl.library.push(...pl.hand); pl.hand = [];
+  shuffle(pl.library);
+  pl.hand = pl.library.splice(0, 7);
+  log(`${pname(p)} 調度重抽 7 張`); renderPlayer(p); save();
+}
+function nextTurn() {
+  S.turn++; document.getElementById('turn-num').textContent = `回合 ${S.turn}`; save();
+}
+function roll(kind) {
+  if (kind === 'coin') log(`🪙 擲硬幣：${Math.random() < .5 ? '正面' : '反面'}`);
+  else log(`🎲 D${kind}：${1 + Math.floor(Math.random() * kind)}`);
+}
+function pname(p) { return p === 'p1' ? '玩家 1' : '玩家 2'; }
+function resetCard(c) { c.tapped = false; c.faceDown = false; c.counters = {}; }
+
+/* ───────── 區域搬移 ───────── */
+function findCard(id) {
+  for (const p of ['p1', 'p2']) for (const z of ['library', 'hand', 'battlefield', 'graveyard', 'exile']) {
+    const arr = S.players[p][z], i = arr.findIndex(c => c.id === id);
+    if (i >= 0) return { p, z, i, card: arr[i] };
+  }
+  return null;
+}
+// pos: 'top' | 'bottom'（牌庫用）；bf 時帶 x,y；hand 時帶 index
+function moveCard(id, toP, toZone, opt) {
+  const loc = findCard(id); if (!loc) return;
+  const card = S.players[loc.p][loc.z].splice(loc.i, 1)[0];
+  // token 離開戰場即消失
+  if (card.token && toZone !== 'battlefield') {
+    log(`Token「${card.name}」離場消失了`);
+    renderPlayer(loc.p); save(); return;
+  }
+  if (toZone !== 'battlefield') resetCard(card);
+  const dest = S.players[toP][toZone];
+  if (toZone === 'library') {
+    (opt && opt.pos === 'bottom') ? dest.push(card) : dest.unshift(card);
+  } else if (toZone === 'hand' && opt && opt.index !== undefined) {
+    dest.splice(opt.index, 0, card);
+  } else {
+    if (toZone === 'battlefield' && opt) { card.x = opt.x; card.y = opt.y; }
+    dest.push(card);
+  }
+  renderPlayer(loc.p); if (toP !== loc.p) renderPlayer(toP); save();
+}
+
+/* ───────── 飛行動畫（非拖曳的搬移用；拖曳時游標本身帶著卡走）───────── */
+function flyBetween(card, fromSelOrRect, toSel) {
+  const fromRect = fromSelOrRect instanceof DOMRect ? fromSelOrRect :
+    (document.querySelector(fromSelOrRect) || {}).getBoundingClientRect?.();
+  const toEl = document.querySelector(toSel);
+  if (!fromRect || !toEl || !document.body.animate) return;
+  const toRect = toEl.getBoundingClientRect();
+  const g = document.createElement('div');
+  g.className = 'fly';
+  g.style.cssText = `left:${fromRect.left}px;top:${fromRect.top}px;` +
+    `width:${fromRect.width}px;height:${fromRect.height}px`;
+  if (card.token || card.faceDown) {
+    g.style.background = 'radial-gradient(ellipse at 30% 30%, #1c3a6a, #050e22)';
+  } else {
+    const img = document.createElement('img');
+    img.src = localImg(card.name);
+    img.onerror = function () { this.onerror = null; this.src = SF_IMG(card.name); };
+    g.appendChild(img);
+  }
+  document.body.appendChild(g);
+  const dx = toRect.left + toRect.width / 2 - (fromRect.left + fromRect.width / 2);
+  const dy = toRect.top + toRect.height / 2 - (fromRect.top + fromRect.height / 2);
+  const sc = Math.min(toRect.width / fromRect.width, 1.15);
+  g.animate(
+    [{ transform: 'translate(0,0) scale(1)', opacity: 1 },
+     { transform: `translate(${dx}px,${dy}px) scale(${sc})`, opacity: .65 }],
+    { duration: 300, easing: 'cubic-bezier(.2,.75,.3,1)' }
+  ).onfinish = () => g.remove();
+}
+
+/* ───────── 渲染 ───────── */
+function renderAll() {
+  document.getElementById('turn-num').textContent = `回合 ${S.turn}`;
+  renderPlayer('p1'); renderPlayer('p2');
+}
+function renderLife(p) {
+  const el = document.getElementById(`${p}-life`);
+  el.textContent = S.players[p].life;
+  el.classList.toggle('danger', S.players[p].life <= 5);
+}
+function renderPlayer(p) {
+  const pl = S.players[p];
+  renderLife(p);
+  document.getElementById(`${p}-name`).textContent =
+    `${pname(p)}｜${DECKS[pl.deckId] ? DECKS[pl.deckId].name : pl.deckId}`;
+  document.getElementById(`${p}-libc`).textContent = pl.library.length;
+  document.getElementById(`${p}-gravec`).textContent = pl.graveyard.length;
+  document.getElementById(`${p}-exilec`).textContent = pl.exile.length;
+  document.getElementById(`${p}-handc`).textContent = pl.hand.length;
+
+  // 手牌
+  const hand = document.getElementById(`${p}-hand`);
+  hand.querySelectorAll('.card').forEach(e => e.remove());
+  for (const c of pl.hand) hand.appendChild(cardEl(c, p, 'hand'));
+
+  // 戰場
+  const bf = document.getElementById(`${p}-bf`);
+  bf.querySelectorAll('.card').forEach(e => e.remove());
+  for (const c of pl.battlefield) bf.appendChild(cardEl(c, p, 'battlefield'));
+
+  // 墳場/流放頂牌
+  for (const z of ['graveyard', 'exile']) {
+    const pile = document.getElementById(`${p}-${z === 'graveyard' ? 'grave' : 'exile'}`);
+    pile.querySelectorAll('img,.pile-txt').forEach(e => e.remove());
+    const top = S.players[p][z][S.players[p][z].length - 1];
+    if (top) pile.prepend(topImg(top));
+  }
+  // 檢視器開著的話同步刷新
+  if (viewer.open && viewer.p === p) refreshViewer();
+}
+function topImg(card) {
+  if (card.token) {
+    const d = document.createElement('div');
+    d.className = 'pile-txt'; d.style.cssText = 'font-size:11px;padding:5px;color:#ccc';
+    d.textContent = card.name; return d;
+  }
+  const img = document.createElement('img');
+  img.src = localImg(card.name);
+  img.onerror = function () { this.onerror = null; this.src = SF_IMG(card.name); };
+  return img;
+}
+function cardEl(card, p, zone) {
+  const el = document.createElement('div');
+  el.className = 'card' + (card.tapped ? ' tapped' : '') + (card.faceDown ? ' face-down' : '')
+    + (card.token ? ' token' : '') + (zone === 'battlefield' ? ' on-bf' : '');
+  el.dataset.id = card.id;
+  if (zone === 'battlefield') { el.style.left = card.x + 'px'; el.style.top = card.y + 'px'; }
+
+  const front = document.createElement('div');
+  front.className = 'front'; front.style.cssText = 'width:100%;height:100%';
+  if (card.token) {
+    front.innerHTML = `<div class="txt"><div>${esc(card.name)}</div>` +
+      (card.pt ? `<div class="tpt">${esc(card.pt)}</div>` : '') + `<div style="color:var(--text3)">TOKEN</div></div>`;
+  } else {
+    const img = document.createElement('img');
+    img.src = localImg(card.name); img.alt = card.name; img.draggable = false;
+    img.onerror = function () {
+      if (!this.dataset.sf) { this.dataset.sf = 1; this.src = SF_IMG(card.name); return; }
+      const t = document.createElement('div');
+      t.className = 'txt'; t.textContent = card.name;
+      this.replaceWith(t);
+    };
+    front.appendChild(img);
+  }
+  el.appendChild(front);
+  const back = document.createElement('div');
+  back.className = 'back'; back.textContent = '🂠';
+  el.appendChild(back);
+
+  // 指示物徽章
+  const badges = document.createElement('div'); badges.className = 'badges';
+  const label = { p1p1: n => `+${n}/+${n}`, m1m1: n => `−${n}/−${n}`,
+                  p1p0: n => `+${n}/+0`, m0m1: n => `−0/−${n}`, gen: n => `●${n}` };
+  for (const [k, n] of Object.entries(card.counters || {})) {
+    if (!n || !label[k]) continue;
+    const b = document.createElement('div');
+    b.className = `badge ${k}`; b.textContent = label[k](n);
+    b.title = '點擊移除一個';
+    b.addEventListener('pointerdown', e => e.stopPropagation());
+    b.addEventListener('click', e => {
+      e.stopPropagation();
+      card.counters[k]--; if (card.counters[k] <= 0) delete card.counters[k];
+      renderPlayer(p); save();
+    });
+    badges.appendChild(b);
+  }
+  el.appendChild(badges);
+
+  // 現在 P/T（基礎值 ± 指示物）
+  if (zone === 'battlefield' && !card.faceDown) {
+    let base = null;
+    if (card.token) {
+      const m = /^(\d+)\s*\/\s*(\d+)$/.exec(card.pt || '');
+      if (m) base = { p: +m[1], t: +m[2] };
+    } else {
+      const d = CARDS[card.name];
+      if (d && typeof d.power === 'number') base = { p: d.power, t: d.toughness };
+    }
+    if (base) {
+      const c = card.counters || {};
+      const pw = base.p + (c.p1p1 || 0) + (c.p1p0 || 0) - (c.m1m1 || 0);
+      const tf = base.t + (c.p1p1 || 0) - (c.m1m1 || 0) - (c.m0m1 || 0);
+      const pt = document.createElement('div');
+      pt.className = 'ptnow' + ((pw !== base.p || tf !== base.t) ? ' mod' : '');
+      pt.textContent = `${pw}/${tf}`;
+      el.appendChild(pt);
+    }
+  }
+  return el;
+}
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+/* ───────── 拖曳（pointer events）───────── */
+const drag = { active: false, moved: false, el: null, ghost: null, id: null, chip: null,
+  startX: 0, startY: 0, offX: 0, offY: 0 };
+
+document.addEventListener('pointerdown', e => {
+  if (e.button !== 0) return;
+  const chip = e.target.closest('.chip');
+  const cardEl_ = e.target.closest('.card');
+  if (!chip && !cardEl_) return;
+  if (cardEl_ && cardEl_.dataset.id === undefined) return;  // 檢視器內的卡不拖曳
+  drag.active = true; drag.moved = false;
+  drag.chip = chip ? chip.dataset.chip : null;
+  drag.el = chip || cardEl_;
+  drag.id = cardEl_ ? +cardEl_.dataset.id : null;
+  drag.startX = e.clientX; drag.startY = e.clientY;
+  const r = drag.el.getBoundingClientRect();
+  drag.offX = e.clientX - r.left; drag.offY = e.clientY - r.top;
+});
+
+document.addEventListener('pointermove', e => {
+  if (!drag.active) return;
+  if (!drag.moved) {
+    if (Math.abs(e.clientX - drag.startX) + Math.abs(e.clientY - drag.startY) < 6) return;
+    drag.moved = true;
+    document.body.classList.add('dragging');
+    drag.ghost = drag.el.cloneNode(true);
+    drag.ghost.classList.add('drag-ghost');
+    drag.ghost.classList.remove('tapped');
+    drag.ghost.style.width = drag.el.offsetWidth + 'px';
+    drag.ghost.style.height = drag.el.offsetHeight + 'px';
+    document.body.appendChild(drag.ghost);
+    if (!drag.chip) drag.el.style.opacity = .35;
+    hideInspector();
+  }
+  drag.ghost.style.left = (e.clientX - drag.offX) + 'px';
+  drag.ghost.style.top = (e.clientY - drag.offY) + 'px';
+});
+
+document.addEventListener('pointerup', e => {
+  if (!drag.active) return;
+  const wasDrag = drag.moved;
+  const id = drag.id, chip = drag.chip, srcEl = drag.el;
+  if (drag.ghost) drag.ghost.remove();
+  if (srcEl && !chip) srcEl.style.opacity = '';
+  document.body.classList.remove('dragging');
+  drag.active = false; drag.moved = false; drag.ghost = null; drag.el = null;
+
+  if (!wasDrag) { if (!chip && id != null) clickCard(id); return; }
+
+  const target = document.elementFromPoint(e.clientX, e.clientY);
+  if (!target) return;
+
+  if (chip) {   // 指示物拖到卡上
+    const tc = target.closest('.card');
+    if (tc) {
+      const loc = findCard(+tc.dataset.id);
+      if (loc && loc.z === 'battlefield') {
+        loc.card.counters[chip] = (loc.card.counters[chip] || 0) + 1;
+        renderPlayer(loc.p); save();
+      }
+    }
+    return;
+  }
+
+  const zoneEl = target.closest('[data-zone]');
+  if (!zoneEl || id == null) return;
+  const toP = zoneEl.dataset.p, toZone = zoneEl.dataset.zone;
+  const opt = {};
+  if (toZone === 'battlefield') {
+    const r = zoneEl.getBoundingClientRect();
+    const cw = srcEl ? srcEl.offsetWidth : 94, ch = srcEl ? srcEl.offsetHeight : 131;
+    opt.x = clamp(e.clientX - r.left - drag.offX, 0, r.width - cw);
+    opt.y = clamp(e.clientY - r.top - drag.offY, 0, r.height - ch);
+  } else if (toZone === 'library') {
+    const r = zoneEl.getBoundingClientRect();
+    opt.pos = (e.clientY - r.top) < r.height / 2 ? 'top' : 'bottom';
+    log(`放到牌庫${opt.pos === 'top' ? '頂' : '底'}`);
+  } else if (toZone === 'hand') {
+    // 依放開位置決定插入順序
+    const cards = [...zoneEl.querySelectorAll('.card')].filter(c => +c.dataset.id !== id);
+    let idx = cards.findIndex(c => e.clientX < c.getBoundingClientRect().left + c.offsetWidth / 2);
+    if (idx < 0) idx = cards.length;
+    opt.index = idx;
+  }
+  moveCard(id, toP, toZone, opt);
+});
+
+function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+/* 點擊：戰場上=橫置切換（直接改 class，讓旋轉動畫播放） */
+function clickCard(id) {
+  const loc = findCard(id); if (!loc || loc.z !== 'battlefield') return;
+  loc.card.tapped = !loc.card.tapped;
+  const el = document.querySelector(`#${loc.p}-bf .card[data-id="${id}"]`);
+  if (el) el.classList.toggle('tapped', loc.card.tapped);
+  else renderPlayer(loc.p);
+  save();
+}
+/* 雙擊：翻面 */
+document.addEventListener('dblclick', e => {
+  const el = e.target.closest('.card'); if (!el || el.dataset.id === undefined) return;
+  const loc = findCard(+el.dataset.id); if (!loc) return;
+  loc.card.faceDown = !loc.card.faceDown;
+  renderPlayer(loc.p); save();
+});
+
+/* 牌庫點擊 = 抽牌；墳場/流放點擊 = 檢視 */
+document.addEventListener('click', e => {
+  if (e.target.closest('.btn') || e.target.closest('.card')) return;
+  const pile = e.target.closest('.pile');
+  if (!pile) return;
+  const p = pile.dataset.p, z = pile.dataset.zone;
+  if (z === 'library') draw(p);
+  else openViewer(p, z);
+});
+document.getElementById('p1-life').addEventListener('click', () => setLifeByPrompt('p1'));
+document.getElementById('p2-life').addEventListener('click', () => setLifeByPrompt('p2'));
+
+/* ───────── 檢查器（hover）───────── */
+const insp = document.getElementById('inspector');
+let hoverTimer = null;
+document.addEventListener('pointerover', e => {
+  const el = e.target.closest('.card');
+  if (!el || drag.active) return;
+  clearTimeout(hoverTimer);
+  hoverTimer = setTimeout(() => showInspector(el, e), 250);
+});
+document.addEventListener('pointerout', e => {
+  if (e.target.closest('.card')) { clearTimeout(hoverTimer); hideInspector(); }
+});
+function showInspector(el, e) {
+  const id = el.dataset.id !== undefined ? +el.dataset.id : (el.dataset.vid !== undefined ? +el.dataset.vid : NaN);
+  const loc = findCard(id); if (!loc || loc.card.faceDown) return;
+  const c = loc.card;
+  const img = document.getElementById('insp-img');
+  const txt = document.getElementById('insp-text');
+  if (c.token) {
+    img.style.display = 'none';
+    txt.innerHTML = `<b>${esc(c.name)}</b>${c.pt ? ` <span class="icost">${esc(c.pt)}</span>` : ''}<br><span class="itype">Token</span>`;
+  } else {
+    img.style.display = '';
+    img.src = localImg(c.name);
+    img.onerror = function () { this.onerror = null; this.src = SF_IMG(c.name); };
+    const d = CARDS[c.name];
+    txt.innerHTML = d
+      ? `<b>${esc(c.name)}</b> <span class="icost">${esc(d.cost || '')}</span><br>` +
+        `<span class="itype">${esc(d.type || '')}${d.power !== undefined ? `　${d.power}/${d.toughness}` : ''}</span>` +
+        (d.abilities ? `<br><i>${esc(d.abilities.join(', '))}</i>` : '') +
+        (d.text ? `<br>${esc(d.text)}` : '')
+      : `<b>${esc(c.name)}</b>`;
+  }
+  const r = el.getBoundingClientRect();
+  const left = r.right + 374 < innerWidth ? r.right + 12 : r.left - 374;
+  insp.style.left = clamp(left, 4, innerWidth - 366) + 'px';
+  insp.classList.add('show');
+  insp.style.top = '0px';
+  requestAnimationFrame(() => {
+    const h = insp.offsetHeight;
+    insp.style.top = clamp(r.top, 4, innerHeight - h - 4) + 'px';
+  });
+}
+function hideInspector() { insp.classList.remove('show'); }
+
+/* ───────── 區域檢視器 ───────── */
+const viewer = { open: false, p: null, zone: null, limit: null, searched: false };
+function openViewer(p, zone, limit) {
+  viewer.open = true; viewer.p = p; viewer.zone = zone; viewer.limit = limit || null;
+  document.getElementById('viewer-shuffle').style.display = zone === 'library' ? '' : 'none';
+  refreshViewer();
+  document.getElementById('viewer-overlay').classList.add('show');
+}
+function refreshViewer() {
+  const { p, zone, limit } = viewer;
+  const arr = S.players[p][zone];
+  const zoneName = { library: '牌庫', graveyard: '墳場', exile: '流放區' }[zone];
+  document.getElementById('viewer-title').textContent =
+    `${pname(p)} 的${zoneName}` + (limit ? `（頂 ${Math.min(limit, arr.length)} 張）` : `（${arr.length} 張）`) +
+    (zone === 'library' ? '　←左＝牌庫頂' : '');
+  const body = document.getElementById('viewer-body');
+  body.innerHTML = '';
+  const list = limit ? arr.slice(0, limit) : arr;
+  list.forEach((c, i) => {
+    const item = document.createElement('div'); item.className = 'v-item';
+    if (zone === 'library') {
+      const idx = document.createElement('div'); idx.className = 'v-idx';
+      idx.textContent = i === 0 ? '頂' : `#${i + 1}`;
+      item.appendChild(idx);
+    }
+    const cardBox = document.createElement('div');
+    cardBox.className = 'card' + (c.token ? ' token' : '');
+    cardBox.dataset.vid = c.id;      // 供 hover 檢查器用（無 data-id，不觸發拖曳）
+    cardBox.style.cursor = 'default';
+    cardBox.appendChild(viewerFace(c));
+    item.appendChild(cardBox);
+    const btns = document.createElement('div'); btns.className = 'vbtns';
+    const acts = [];
+    acts.push(['手牌', () => viewerMove(c, 'hand', null, cardBox)]);
+    acts.push(['戰場', () => viewerMove(c, 'battlefield', null, cardBox)]);
+    if (zone !== 'graveyard') acts.push(['墳場', () => viewerMove(c, 'graveyard', null, cardBox)]);
+    if (zone !== 'exile') acts.push(['流放', () => viewerMove(c, 'exile', null, cardBox)]);
+    if (zone === 'library') {
+      acts.push(['置頂', () => viewerMove(c, 'library', { pos: 'top' }, cardBox)]);
+      acts.push(['置底', () => viewerMove(c, 'library', { pos: 'bottom' }, cardBox)]);
+    } else {
+      acts.push(['庫頂', () => viewerMove(c, 'library', { pos: 'top' }, cardBox)]);
+      acts.push(['庫底', () => viewerMove(c, 'library', { pos: 'bottom' }, cardBox)]);
+    }
+    for (const [t, fn] of acts) {
+      const b = document.createElement('button'); b.className = 'btn'; b.textContent = t;
+      b.onclick = fn; btns.appendChild(b);
+    }
+    item.appendChild(btns);
+    body.appendChild(item);
+  });
+  if (!list.length) body.innerHTML = '<div style="color:var(--text3);padding:20px">（空）</div>';
+}
+function viewerFace(c) {
+  if (c.token) {
+    const t = document.createElement('div'); t.className = 'txt';
+    t.innerHTML = `<div>${esc(c.name)}</div>` + (c.pt ? `<div class="tpt">${esc(c.pt)}</div>` : '');
+    return t;
+  }
+  const img = document.createElement('img');
+  img.src = localImg(c.name); img.draggable = false;
+  img.onerror = function () { this.onerror = null; this.src = SF_IMG(c.name); };
+  return img;
+}
+function viewerMove(card, zone, opt, fromEl) {
+  const fromRect = fromEl ? fromEl.getBoundingClientRect() : null;
+  moveCard(card.id, viewer.p, zone, opt || {});
+  if (fromRect) {
+    const toSel = zone === 'battlefield' ? `#${viewer.p}-bf .card[data-id="${card.id}"]`
+      : zone === 'hand' ? `#${viewer.p}-hand .card[data-id="${card.id}"]`
+      : `.pile[data-zone="${zone}"][data-p="${viewer.p}"]`;
+    flyBetween(card, fromRect, toSel);
+  }
+  if (viewer.zone === 'library' && zone !== 'library') viewer.searched = true;
+  refreshViewer();
+}
+function viewerShuffle() { shuffleLib(viewer.p); refreshViewer(); }
+function closeViewer() {
+  document.getElementById('viewer-overlay').classList.remove('show');
+  if (viewer.zone === 'library' && viewer.searched && !viewer.limit)
+    log('提示：剛剛搜尋過牌庫，記得洗牌（規則要求）。');
+  viewer.open = false; viewer.searched = false;
+}
+function peekTop(p) {
+  const v = prompt('看牌庫頂幾張？', '3');
+  if (!v || isNaN(+v) || +v < 1) return;
+  openViewer(p, 'library', Math.floor(+v));
+}
+
+/* ───────── Token 產生器 ───────── */
+const TOKEN_PRESETS = [
+  ['Squirrel', '1/1'], ['Skeleton', '1/1'], ['Elf Warrior', '1/1'], ['Saproling', '1/1'],
+  ['Goblin', '1/1'], ['Soldier', '1/1'], ['Ape', '4/4'], ['Kavu', '3/3'],
+  ['Wurm', '6/6'], ['Eldrazi Scion', '1/1'], ['Spawn', '0/1'], ['Plant', '0/1'],
+];
+let tokenFor = 'p1';
+function openTokenMaker(p) {
+  tokenFor = p;
+  document.getElementById('token-title').textContent = `產生 Token → ${pname(p)} 戰場`;
+  const box = document.getElementById('token-presets');
+  box.innerHTML = '';
+  for (const [name, pt] of TOKEN_PRESETS) {
+    const b = document.createElement('button'); b.className = 'btn';
+    b.textContent = `${name} ${pt}`;
+    b.onclick = () => spawnToken(name, pt);
+    box.appendChild(b);
+  }
+  document.getElementById('token-overlay').classList.add('show');
+}
+function closeTokenMaker() { document.getElementById('token-overlay').classList.remove('show'); }
+function makeCustomToken() {
+  const name = document.getElementById('tok-name').value.trim() || 'Token';
+  const pt = document.getElementById('tok-pt').value.trim();
+  spawnToken(name, pt);
+}
+function spawnToken(name, pt) {
+  const bf = S.players[tokenFor].battlefield;
+  const c = newCard(name, { token: true, pt: pt || '' });
+  c.x = 20 + (bf.length % 8) * 30; c.y = 30 + (bf.length % 4) * 22;
+  bf.push(c);
+  renderPlayer(tokenFor); save();
+}
+
+/* Esc 關閉面板 */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeViewer(); closeTokenMaker(); }
+});
+</script>
+</body>
+</html>

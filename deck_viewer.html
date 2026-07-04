@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>MTG Deck Viewer</title>
+<style>
+  :root {
+    --bg: #111; --bg2: #1a1a1a; --bg3: #222;
+    --text: #f0f0f0; --text2: #999; --text3: #555;
+    --gold: #ffd060; --red: #ff6a3a;
+    --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.18);
+    --radius: 8px;
+    --cw: 160px; --ch: 224px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg); color: var(--text); min-height: 100vh; padding: 16px; font-size: 13px; }
+
+  /* ── Header ── */
+  .header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+    padding: 12px 18px; background: var(--bg2); border-radius: var(--radius);
+    border: 0.5px solid var(--border2); flex-wrap: wrap; }
+  .title { font-size: 18px; font-weight: 700; color: var(--gold); }
+  select { background: var(--bg3); color: var(--text); border: 1px solid var(--border2);
+    border-radius: 6px; padding: 6px 12px; font-size: 13px; cursor: pointer; outline: none; }
+  select:hover { border-color: var(--gold); }
+  .deck-meta { font-size: 12px; color: var(--text2); margin-left: auto; }
+
+  /* ── Section ── */
+  .section { margin-bottom: 28px; }
+  .slabel { font-size: 11px; font-weight: 700; color: var(--text3);
+    text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px;
+    padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+  .slabel span { color: var(--text2); font-weight: 400; margin-left: 6px; }
+
+  /* ── Card grid ── */
+  .card-grid { display: flex; flex-wrap: wrap; gap: 12px; padding: 4px 2px; overflow: visible; }
+
+  /* ── Card wrapper ── */
+  .cw { position: relative; display: inline-flex; flex-direction: column;
+    align-items: center; gap: 6px; cursor: default; }
+  .cw img { width: var(--cw); height: var(--ch); border-radius: 10px;
+    object-fit: cover; border: 1px solid rgba(255,255,255,0.15);
+    transition: transform .18s ease, box-shadow .18s ease;
+    display: block; pointer-events: none; }
+  .cw:hover { z-index: 50; }
+  .cw:hover img { transform: scale(2); transform-origin: center bottom;
+    box-shadow: 0 12px 48px rgba(0,0,0,.95); }
+
+  /* count badge */
+  .count-badge { position: absolute; top: 6px; left: 6px;
+    background: rgba(0,0,0,.82); color: var(--gold);
+    font-size: 13px; font-weight: 800; padding: 2px 7px;
+    border-radius: 5px; pointer-events: none; min-width: 22px; text-align: center; }
+
+  /* card info label */
+  .cinfo { text-align: center; max-width: var(--cw); }
+  .cname { font-size: 11px; color: var(--text); font-weight: 600;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: var(--cw); }
+  .ccost { font-size: 10px; color: var(--gold); margin-top: 1px; }
+  .cpt   { font-size: 10px; color: #7fcc40; }
+
+  /* ── Card error fallback ── */
+  .card-err { width: var(--cw); height: var(--ch); border-radius: 10px;
+    background: var(--bg3); border: 1px solid var(--border2);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; font-size: 11px; color: var(--text2); padding: 8px;
+    line-height: 1.4; }
+
+  /* ── Loading ── */
+  .loading { color: var(--text2); font-style: italic; padding: 20px; }
+  .empty { color: var(--text3); font-style: italic; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="title">🃏 Deck Viewer</div>
+  <select id="deck-select" onchange="loadDeck(this.value)">
+    <option value="">— 選擇牌組 —</option>
+  </select>
+  <div class="deck-meta" id="deck-meta"></div>
+</div>
+
+<div id="viewer"></div>
+
+<script src="cards.js"></script>
+<script src="decks.js"></script>
+<script>
+const slug = n => n.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const localImg = n => `decks/cards/${slug(n)}.jpg`;
+const SF = name =>
+  `https://api.scryfall.com/cards/named?exact=${encodeURIComponent(name)}&format=image&version=normal`;
+
+const CARDS = window.CARDS_DATA || {};
+const DECKS = window.DECKS_DATA || {};
+
+/* 下拉選單：直接從 decks.js 動態產生，依 era 分組；新增牌組不用改這個檔案 */
+(function buildSelect() {
+  const sel = document.getElementById('deck-select');
+  if (!Object.keys(DECKS).length) {
+    sel.insertAdjacentHTML('beforeend',
+      '<option value="" disabled>找不到牌組資料，請先執行 python3 fetch_cards.py --all</option>');
+    return;
+  }
+  const byEra = {};
+  for (const [key, d] of Object.entries(DECKS)) {
+    (byEra[d.era] ||= []).push([key, d]);
+  }
+  for (const [era, list] of Object.entries(byEra)) {
+    sel.insertAdjacentHTML('beforeend', `<option value="" disabled>── ${esc(era)} ──</option>`);
+    for (const [key, d] of list) {
+      sel.insertAdjacentHTML('beforeend', `<option value="${key}">${esc(d.name)}</option>`);
+    }
+  }
+})();
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function makeImg(name) {
+  const img = document.createElement('img');
+  img.src = localImg(name);
+  img.alt = name;
+  img.loading = 'lazy';
+  img.onerror = function() {
+    if (!this.dataset.sf) { this.dataset.sf = 1; this.src = SF(name); return; }
+    const fb = document.createElement('div');
+    fb.className = 'card-err';
+    fb.textContent = name;
+    this.parentNode.replaceChild(fb, this);
+  };
+  return img;
+}
+
+function makeCard(name, count) {
+  const data = CARDS[name] || {};
+  const wrap = document.createElement('div');
+  wrap.className = 'cw';
+
+  wrap.appendChild(makeImg(name));
+
+  if (count > 1) {
+    const badge = document.createElement('div');
+    badge.className = 'count-badge';
+    badge.textContent = `×${count}`;
+    wrap.appendChild(badge);
+  }
+
+  const info = document.createElement('div');
+  info.className = 'cinfo';
+
+  const nm = document.createElement('div');
+  nm.className = 'cname';
+  nm.textContent = name;
+  info.appendChild(nm);
+
+  if (data.cost) {
+    const cs = document.createElement('div');
+    cs.className = 'ccost';
+    cs.textContent = data.cost;
+    info.appendChild(cs);
+  }
+  if (data.power !== undefined) {
+    const pt = document.createElement('div');
+    pt.className = 'cpt';
+    pt.textContent = `${data.power}/${data.toughness}`;
+    info.appendChild(pt);
+  }
+
+  wrap.appendChild(info);
+  return wrap;
+}
+
+function groupCards(cards) {
+  const groups = {
+    'Creature': [],
+    'Instant': [],
+    'Sorcery': [],
+    'Enchantment': [],
+    'Artifact': [],
+    'Land': [],
+    'Other': []
+  };
+  for (const c of cards) {
+    const data = CARDS[c.name] || {};
+    const t = data.type || '';
+    if (t.includes('Creature') || t.includes('Artifact Creature')) groups['Creature'].push(c);
+    else if (t.includes('Instant')) groups['Instant'].push(c);
+    else if (t.includes('Sorcery')) groups['Sorcery'].push(c);
+    else if (t.includes('Enchantment')) groups['Enchantment'].push(c);
+    else if (t.includes('Artifact')) groups['Artifact'].push(c);
+    else if (t.includes('Land')) groups['Land'].push(c);
+    else groups['Other'].push(c);
+  }
+  return groups;
+}
+
+const GROUP_LABELS = {
+  'Creature': '⚔️ 生物',
+  'Instant': '⚡ 即時',
+  'Sorcery': '🔮 法術',
+  'Enchantment': '✨ 結界',
+  'Artifact': '⚙️ 神器',
+  'Land': '🌍 地牌',
+  'Other': '？其他'
+};
+
+function loadDeck(key) {
+  const viewer = document.getElementById('viewer');
+  const meta = document.getElementById('deck-meta');
+  if (!key) { viewer.innerHTML = ''; meta.textContent = ''; return; }
+
+  const deck = DECKS[key];
+  if (!deck) { viewer.innerHTML = '<div class="loading">找不到這副牌組。</div>'; return; }
+
+  const cards = deck.cards.map(([name, count]) => ({ name, count }));
+  const total = cards.reduce((s, c) => s + c.count, 0);
+  meta.textContent = `${deck.name} ／ ${total} 張`;
+
+  const groups = groupCards(cards);
+  viewer.innerHTML = '';
+
+  for (const [type, label] of Object.entries(GROUP_LABELS)) {
+    const list = groups[type];
+    if (!list || list.length === 0) continue;
+    const count = list.reduce((s, c) => s + c.count, 0);
+
+    const sec = document.createElement('div');
+    sec.className = 'section';
+
+    const sl = document.createElement('div');
+    sl.className = 'slabel';
+    sl.innerHTML = `${label}<span>${count} 張</span>`;
+    sec.appendChild(sl);
+
+    const grid = document.createElement('div');
+    grid.className = 'card-grid';
+    list.forEach(c => grid.appendChild(makeCard(c.name, c.count)));
+    sec.appendChild(grid);
+
+    viewer.appendChild(sec);
+  }
+}
+</script>
+</body>
+</html>

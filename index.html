@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KMTG 自由桌面</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at top, #1a2035 0%, #0d1117 60%);
+    font-family: "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+    color: #e6edf3;
+  }
+  .wrap { text-align: center; padding: 40px 20px; }
+  .mana {
+    font-size: 40px;
+    letter-spacing: 12px;
+    margin-bottom: 24px;
+  }
+  h1 { font-size: 44px; margin-bottom: 12px; letter-spacing: 2px; }
+  .sub {
+    color: #8b949e;
+    font-size: 17px;
+    margin-bottom: 48px;
+    line-height: 1.7;
+  }
+  .buttons {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  a.btn {
+    display: inline-block;
+    padding: 18px 48px;
+    font-size: 20px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: transform .15s, box-shadow .15s;
+  }
+  a.btn:hover { transform: translateY(-3px); }
+  .btn-start {
+    background: linear-gradient(135deg, #d4a017, #b8860b);
+    color: #1a1a1a;
+    box-shadow: 0 4px 20px rgba(212,160,23,.35);
+  }
+  .btn-start:hover { box-shadow: 0 8px 28px rgba(212,160,23,.5); }
+  .btn-decks {
+    background: #21262d;
+    color: #e6edf3;
+    border: 1px solid #3d444d;
+  }
+  .btn-decks:hover { border-color: #8b949e; }
+  .note {
+    margin-top: 56px;
+    color: #6e7681;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="mana">⚪🔵⬛🔴🟢</div>
+    <h1>KMTG 自由桌面</h1>
+    <p class="sub">瀏覽器裡的 MTG 數位桌面——牌桌與道具就緒，<br>規則由玩家自己裁決，自由對戰。</p>
+    <div class="buttons">
+      <a class="btn btn-start" href="tabletop.html">▶ Start Game</a>
+      <a class="btn btn-decks" href="deck_viewer.html">🃏 Decks</a>
+    </div>
+    <p class="note">同畫面雙人對戰・遊戲進度自動儲存於瀏覽器<br>不驗法力、不算傷害——像實體牌桌一樣自由</p>
+  </div>
+</body>
+</html>
